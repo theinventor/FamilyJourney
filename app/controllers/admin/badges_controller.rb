@@ -1,5 +1,5 @@
 class Admin::BadgesController < Admin::BaseController
-  before_action :set_badge, only: [:show, :edit, :update, :destroy, :publish, :unpublish]
+  before_action :set_badge, only: [ :show, :edit, :update, :destroy, :publish, :unpublish ]
 
   def index
     @badges = current_family.badges.includes(:badge_category, :groups).order(:title)
@@ -58,7 +58,7 @@ class Admin::BadgesController < Admin::BaseController
     params.require(:badge).permit(
       :title, :description, :instructions, :points, :badge_category_id,
       group_ids: [],
-      badge_challenges_attributes: [:id, :title, :description, :position, :_destroy]
+      badge_challenges_attributes: [ :id, :title, :description, :position, :_destroy ]
     )
   end
 end

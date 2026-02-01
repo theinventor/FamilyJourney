@@ -1,5 +1,5 @@
 class Admin::BadgeCategoriesController < Admin::BaseController
-  before_action :set_badge_category, only: [:show, :edit, :update, :destroy, :move_up, :move_down]
+  before_action :set_badge_category, only: [ :show, :edit, :update, :destroy, :move_up, :move_down ]
 
   def index
     @badge_categories = current_family.badge_categories.includes(:badges)

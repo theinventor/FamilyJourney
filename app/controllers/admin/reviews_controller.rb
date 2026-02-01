@@ -1,5 +1,5 @@
 class Admin::ReviewsController < Admin::BaseController
-  before_action :set_submission, only: [:show, :approve, :deny]
+  before_action :set_submission, only: [ :show, :approve, :deny ]
 
   def index
     @pending_submissions = BadgeSubmission.pending_review
@@ -9,7 +9,7 @@ class Admin::ReviewsController < Admin::BaseController
       .order(submitted_at: :asc)
 
     @recent_reviews = BadgeSubmission
-      .where(status: [:approved, :denied])
+      .where(status: [ :approved, :denied ])
       .joins(:badge)
       .where(badges: { family_id: current_family.id })
       .includes(:badge, :user, :reviewed_by)

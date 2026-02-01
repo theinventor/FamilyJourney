@@ -37,7 +37,7 @@ class Rack::Attack
     [
       429,
       { "Content-Type" => "text/html" },
-      ["Too many requests. Please try again later."]
+      [ "Too many requests. Please try again later." ]
     ]
   end
 end

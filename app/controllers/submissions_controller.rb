@@ -1,7 +1,7 @@
 class SubmissionsController < ApplicationController
   before_action :authenticate_user!
   before_action :require_kid!
-  before_action :set_badge, only: [:new, :create]
+  before_action :set_badge, only: [ :new, :create ]
 
   def new
     if @badge.earned_by?(current_user)

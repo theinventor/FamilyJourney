@@ -1,5 +1,5 @@
 class Admin::RedemptionsController < Admin::BaseController
-  before_action :set_redemption, only: [:show, :approve, :deny]
+  before_action :set_redemption, only: [ :show, :approve, :deny ]
 
   def index
     @pending_redemptions = Redemption.pending
@@ -9,7 +9,7 @@ class Admin::RedemptionsController < Admin::BaseController
       .order(requested_at: :asc)
 
     @recent_redemptions = Redemption
-      .where(status: [:approved, :denied])
+      .where(status: [ :approved, :denied ])
       .joins(:user)
       .where(users: { family_id: current_family.id })
       .includes(:prize, :user, :reviewed_by)

@@ -1,5 +1,5 @@
 class Admin::GroupsController < Admin::BaseController
-  before_action :set_group, only: [:show, :edit, :update, :destroy, :add_member, :remove_member]
+  before_action :set_group, only: [ :show, :edit, :update, :destroy, :add_member, :remove_member ]
 
   def index
     @groups = current_family.groups.includes(:users)

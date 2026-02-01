@@ -1,7 +1,7 @@
 class RedemptionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :require_kid!, except: [:index, :show]
-  before_action :set_prize, only: [:new, :create]
+  before_action :require_kid!, except: [ :index, :show ]
+  before_action :set_prize, only: [ :new, :create ]
 
   def index
     @redemptions = current_user.redemptions.includes(:prize).order(created_at: :desc)

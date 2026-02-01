@@ -13,6 +13,6 @@ class CreateBadgeSubmissions < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :badge_submissions, [:badge_id, :user_id, :status]
+    add_index :badge_submissions, [ :badge_id, :user_id, :status ]
   end
 end

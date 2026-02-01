@@ -53,11 +53,11 @@ puts "Creating groups..."
 
 all_kids = Group.find_or_create_by!(name: "All Kids", family: family)
 all_kids.update!(description: "All children in the family")
-all_kids.users = [kid1, kid2]
+all_kids.users = [ kid1, kid2 ]
 
 older_kids = Group.find_or_create_by!(name: "Older Kids", family: family)
 older_kids.update!(description: "Kids 10 and up")
-older_kids.users = [kid1]
+older_kids.users = [ kid1 ]
 
 puts "  Created #{family.groups.count} groups"
 
@@ -82,7 +82,7 @@ badge1 = Badge.find_or_create_by!(title: "Make Your Bed", family: family) do |b|
   b.status = :published
   b.published_at = Time.current
 end
-badge1.groups = [all_kids]
+badge1.groups = [ all_kids ]
 
 badge2 = Badge.find_or_create_by!(title: "Clean Room Champion", family: family) do |b|
   b.description = "Keep your room clean and organized for a full week"
@@ -93,7 +93,7 @@ badge2 = Badge.find_or_create_by!(title: "Clean Room Champion", family: family) 
   b.status = :published
   b.published_at = Time.current
 end
-badge2.groups = [all_kids]
+badge2.groups = [ all_kids ]
 
 badge3 = Badge.find_or_create_by!(title: "Homework Hero", family: family) do |b|
   b.description = "Complete all homework on time for two weeks"
@@ -103,7 +103,7 @@ badge3 = Badge.find_or_create_by!(title: "Homework Hero", family: family) do |b|
   b.status = :published
   b.published_at = Time.current
 end
-badge3.groups = [all_kids]
+badge3.groups = [ all_kids ]
 
 # Multi-challenge badge
 reading_badge = Badge.find_or_create_by!(title: "Reading Explorer", family: family) do |b|
@@ -115,7 +115,7 @@ reading_badge = Badge.find_or_create_by!(title: "Reading Explorer", family: fami
   b.status = :published
   b.published_at = Time.current
 end
-reading_badge.groups = [all_kids]
+reading_badge.groups = [ all_kids ]
 
 # Add challenges to reading badge
 if reading_badge.badge_challenges.empty?
@@ -137,7 +137,7 @@ Badge.find_or_create_by!(title: "Kitchen Helper", family: family) do |b|
   b.created_by = parent
   b.status = :published
   b.published_at = Time.current
-end.tap { |badge| badge.groups = [all_kids] }
+end.tap { |badge| badge.groups = [ all_kids ] }
 
 Badge.find_or_create_by!(title: "10K Steps", family: family) do |b|
   b.description = "Walk 10,000 steps in a single day"
@@ -146,7 +146,7 @@ Badge.find_or_create_by!(title: "10K Steps", family: family) do |b|
   b.created_by = parent
   b.status = :published
   b.published_at = Time.current
-end.tap { |badge| badge.groups = [all_kids] }
+end.tap { |badge| badge.groups = [ all_kids ] }
 
 # Draft badge (not visible to kids)
 Badge.find_or_create_by!(title: "Super Helper", family: family) do |b|

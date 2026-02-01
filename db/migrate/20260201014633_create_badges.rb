@@ -14,6 +14,6 @@ class CreateBadges < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :badges, [:family_id, :status]
+    add_index :badges, [ :family_id, :status ]
   end
 end

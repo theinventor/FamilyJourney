@@ -1,5 +1,5 @@
 class Admin::PrizesController < Admin::BaseController
-  before_action :set_prize, only: [:show, :edit, :update, :destroy]
+  before_action :set_prize, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @prizes = current_family.prizes.order(active: :desc, point_cost: :asc)

@@ -8,19 +8,19 @@ Rails.application.routes.draw do
   get "profile", to: "profiles#show", as: :profile
 
   # Prizes for kids
-  resources :prizes, only: [:index, :show]
+  resources :prizes, only: [ :index, :show ]
 
   # Submissions for kids
-  resources :submissions, only: [:show]
-  resources :badges, only: [:show] do
-    resources :submissions, only: [:new, :create]
+  resources :submissions, only: [ :show ]
+  resources :badges, only: [ :show ] do
+    resources :submissions, only: [ :new, :create ]
   end
 
   # Challenge completions for kids
-  resources :challenge_completions, only: [:new, :create]
+  resources :challenge_completions, only: [ :new, :create ]
 
   # Redemptions for kids
-  resources :redemptions, only: [:index, :new, :create, :show]
+  resources :redemptions, only: [ :index, :new, :create, :show ]
 
 
   # Admin namespace for parents
@@ -46,7 +46,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :reviews, only: [:index, :show] do
+    resources :reviews, only: [ :index, :show ] do
       member do
         post :approve
         post :deny
@@ -55,7 +55,7 @@ Rails.application.routes.draw do
 
     resources :prizes
 
-    resources :redemptions, only: [:index, :show] do
+    resources :redemptions, only: [ :index, :show ] do
       member do
         post :approve
         post :deny

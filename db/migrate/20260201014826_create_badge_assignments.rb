@@ -10,6 +10,6 @@ class CreateBadgeAssignments < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :badge_assignments, [:badge_id, :group_id], unique: true
+    add_index :badge_assignments, [ :badge_id, :group_id ], unique: true
   end
 end
