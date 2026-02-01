@@ -25,6 +25,10 @@ Rails.application.routes.draw do
   # Redemptions for kids
   resources :redemptions, only: [ :index, :new, :create, :show ]
 
+  # Invites (public)
+  get "invites/:token", to: "invites#show", as: :invite
+  post "invites/:token/accept", to: "invites#accept", as: :accept_invite
+
   # API v1 - REST API for external access (e.g., AI agents)
   namespace :api do
     namespace :v1 do
@@ -135,6 +139,10 @@ Rails.application.routes.draw do
         post :deny
       end
     end
+
+    resources :invites, only: [ :index, :new, :create, :destroy ]
+
+    resources :family_members, only: [ :index ]
   end
 
   # Health check for load balancers

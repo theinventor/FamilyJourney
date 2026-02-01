@@ -1,0 +1,33 @@
+<div class="page-header">
+  <h1 class="page-title">Create Parent Invite</h1>
+  <%= link_to "Back", admin_invites_path, class: "btn-outline" %>
+</div>
+
+<div class="card max-w-lg">
+  <%= form_with model: @invite, url: admin_invites_path, local: true, class: "space-y-6" do |f| %>
+    <%= render "shared/error_messages", resource: @invite %>
+
+    <div>
+      <%= f.label :email, "Email (optional)", class: "form-label" %>
+      <%= f.email_field :email, class: "form-input", placeholder: "e.g., partner@example.com" %>
+      <p class="text-xs text-gray-500 mt-1">Leave blank to create an open invite that anyone can use. Add an email for record-keeping only.</p>
+    </div>
+
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+      <div class="flex items-start gap-3">
+        <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
+        </svg>
+        <div>
+          <p class="text-sm font-medium text-blue-800">A secure invite link will be generated</p>
+          <p class="text-sm text-blue-600">Share this link with another parent. The invite expires in 7 days.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex gap-3">
+      <%= f.submit "Create Invite", class: "btn-primary" %>
+      <%= link_to "Cancel", admin_invites_path, class: "btn-outline" %>
+    </div>
+  <% end %>
+</div>

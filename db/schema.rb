@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_01_160706) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_01_165658) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -142,6 +142,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_01_160706) do
     t.index ["family_id"], name: "index_groups_on_family_id"
   end
 
+  create_table "invites", force: :cascade do |t|
+    t.datetime "accepted_at"
+    t.integer "accepted_by_id"
+    t.datetime "created_at", null: false
+    t.string "email"
+    t.datetime "expires_at", null: false
+    t.integer "family_id", null: false
+    t.integer "invited_by_id", null: false
+    t.string "status", default: "pending", null: false
+    t.string "token", null: false
+    t.datetime "updated_at", null: false
+    t.index ["accepted_by_id"], name: "index_invites_on_accepted_by_id"
+    t.index ["family_id"], name: "index_invites_on_family_id"
+    t.index ["invited_by_id"], name: "index_invites_on_invited_by_id"
+    t.index ["token"], name: "index_invites_on_token", unique: true
+  end
+
   create_table "prizes", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
@@ -207,6 +224,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_01_160706) do
   add_foreign_key "group_memberships", "groups"
   add_foreign_key "group_memberships", "users"
   add_foreign_key "groups", "families"
+  add_foreign_key "invites", "families"
+  add_foreign_key "invites", "users", column: "accepted_by_id"
+  add_foreign_key "invites", "users", column: "invited_by_id"
   add_foreign_key "prizes", "families"
   add_foreign_key "redemptions", "prizes"
   add_foreign_key "redemptions", "users"

@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :badge_submissions, dependent: :destroy
   has_many :challenge_completions, dependent: :destroy
   has_many :redemptions, dependent: :destroy
+  has_many :sent_invites, class_name: "Invite", foreign_key: :invited_by_id, dependent: :destroy
+  has_many :accepted_invites, class_name: "Invite", foreign_key: :accepted_by_id, dependent: :nullify
 
   validates :name, presence: true
   validates :role, presence: true, inclusion: { in: %w[parent kid] }

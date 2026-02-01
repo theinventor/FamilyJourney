@@ -4,6 +4,66 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :check_honeypot, only: :create
 
   def create
+    # Check if this is an invite signup
+    if params[:invite_token].present?
+      handle_invite_signup
+    else
+      handle_normal_signup
+    end
+  end
+
+  private
+
+  def handle_invite_signup
+    @invite = Invite.find_by(token: params[:invite_token])
+
+    if @invite.nil?
+      build_resource(sign_up_params)
+      resource.errors.add(:base, "Invalid invite link")
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
+      return
+    end
+
+    unless @invite.can_be_accepted?
+      build_resource(sign_up_params)
+      resource.errors.add(:base, "This invite has expired or is no longer valid")
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
+      return
+    end
+
+    # Build the user with the invite's family
+    build_resource(sign_up_params.merge(family: @invite.family, role: "parent"))
+
+    if resource.save
+      @invite.accept!(resource)
+      yield resource if block_given?
+      if resource.persisted?
+        if resource.active_for_authentication?
+          set_flash_message! :notice, "Welcome to #{@invite.family.name}! You've successfully joined as a parent."
+          sign_up(resource_name, resource)
+          respond_with resource, location: after_sign_up_path_for(resource)
+        else
+          set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
+          expire_data_after_sign_in!
+          respond_with resource, location: after_inactive_sign_up_path_for(resource)
+        end
+      else
+        clean_up_passwords resource
+        set_minimum_password_length
+        respond_with resource
+      end
+    else
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
+    end
+  end
+
+  def handle_normal_signup
     # Create family first
     @family = Family.new(name: params[:family_name])
 
@@ -44,8 +104,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
       respond_with resource
     end
   end
-
-  private
 
   def check_honeypot
     if params[:website].present?

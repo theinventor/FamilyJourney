@@ -66,6 +66,7 @@
           <p class="text-sm opacity-90">Family Members</p>
           <p class="text-3xl font-extrabold mt-1"><%= @total_kids %></p>
           <p class="text-xs mt-1 opacity-80">kids in <%= @total_groups %> groups</p>
+          <%= link_to "Manage parents", admin_family_members_path, class: "text-xs mt-1 opacity-80 underline block" %>
         </div>
         <div class="p-3 rounded-xl bg-white/20">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

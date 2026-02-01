@@ -4,6 +4,7 @@ class Family < ApplicationRecord
   has_many :badge_categories, dependent: :destroy
   has_many :badges, dependent: :destroy
   has_many :prizes, dependent: :destroy
+  has_many :invites, dependent: :destroy
 
   validates :name, presence: true
 

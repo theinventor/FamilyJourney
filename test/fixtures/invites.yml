@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+active_invite:
+  token: active_invite_token_12345
+  email: newparent@example.com
+  family: smith_family
+  invited_by: parent_alice
+  accepted_by:
+  accepted_at:
+  expires_at: <%= 7.days.from_now %>
+  status: pending
+
+expired_invite:
+  token: expired_invite_token_12345
+  email: expired@example.com
+  family: smith_family
+  invited_by: parent_alice
+  accepted_by:
+  accepted_at:
+  expires_at: <%= 1.day.ago %>
+  status: pending
+
+accepted_invite:
+  token: accepted_invite_token_12345
+  email:
+  family: smith_family
+  invited_by: parent_alice
+  accepted_by: parent_alice
+  accepted_at: <%= 1.day.ago %>
+  expires_at: <%= 7.days.from_now %>
+  status: accepted
