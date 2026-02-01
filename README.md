@@ -148,6 +148,47 @@ Individual previews:
 - `/rails/mailers/notification_mailer/redemption_approved`
 - `/rails/mailers/notification_mailer/redemption_denied`
 
+## API Access
+
+FamilyJourney includes a REST API for programmatic access. Parents can find their API key in their dashboard under "API Access".
+
+### Authentication
+
+Include your API token in the `Authorization` header:
+```bash
+curl -H "Authorization: Bearer YOUR_API_TOKEN" http://localhost:3000/api/v1/kids
+```
+
+### Endpoints
+
+| Resource | Endpoints |
+|----------|-----------|
+| **Kids** | `GET/POST /api/v1/kids`, `GET/PATCH/DELETE /api/v1/kids/:id` |
+| **Badges** | `GET/POST /api/v1/badges`, `POST /api/v1/badges/:id/publish` |
+| **Submissions** | `GET /api/v1/badge_submissions`, `POST .../approve`, `POST .../deny` |
+| **Prizes** | Full CRUD at `/api/v1/prizes` |
+| **Redemptions** | `GET /api/v1/redemptions`, `POST .../approve`, `POST .../deny` |
+| **Family** | `GET /api/v1/family` |
+
+Full API documentation: `/api/docs`
+
+## Clawdbot Skill
+
+A [Clawdbot](https://github.com/clawdbot/clawdbot) skill is included in `skill/` for AI assistant integration. This lets parents manage FamilyJourney via text or chat:
+
+```bash
+# Install the skill
+cp -r skill/familyjourney ~/.clawdbot/skills/
+
+# Add your API key to TOOLS.md
+```
+
+Example commands your AI assistant can handle:
+- "How many points does Emma have?"
+- "Approve Jack's homework badge submission"
+- "Add a new prize called Movie Night for 50 points"
+- "What badges are pending review?"
+
 ## Development
 
 ### Running Tests
