@@ -70,3 +70,348 @@
 .shadow-float {
   box-shadow: 0 12px 40px -12px rgba(30, 30, 60, 0.2);
 }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  color: white;
+  background: linear-gradient(135deg, var(--color-coral-start), var(--color-coral-end));
+}
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  background-color: #f3f4f6;
+  color: #374151;
+}
+.btn-secondary:hover {
+  background-color: #e5e7eb;
+}
+
+.btn-success {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  color: white;
+  background: linear-gradient(135deg, var(--color-green-start), var(--color-green-end));
+}
+.btn-success:hover {
+  opacity: 0.9;
+}
+
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  background-color: #ef4444;
+  color: white;
+}
+.btn-danger:hover {
+  background-color: #dc2626;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  border: 2px solid #d1d5db;
+  color: #374151;
+}
+.btn-outline:hover {
+  border-color: #9ca3af;
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+/* Stat card */
+.stat-card {
+  padding: 1.25rem;
+  border-radius: 1rem;
+  color: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Badge card */
+.badge-card {
+  position: relative;
+  padding: 1rem;
+  border-radius: 1rem;
+  color: white;
+  transition: all 0.2s;
+}
+.badge-card:hover {
+  transform: scale(1.05) rotate(1deg);
+}
+
+.badge-card-locked {
+  position: relative;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: #f3f4f6;
+  color: #9ca3af;
+}
+
+/* Card components */
+.card {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px -4px rgba(255, 107, 107, 0.15);
+}
+
+.card-hover {
+  transition: transform 0.2s;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+}
+
+/* Navigation links */
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  color: #4b5563;
+  transition: all 0.2s;
+}
+.nav-link:hover {
+  background-color: #f3f4f6;
+}
+
+.nav-link-active {
+  background-color: #f3f4f6;
+  color: #111827;
+  font-weight: 600;
+}
+
+/* Status pills */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-available {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.status-in-progress {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-ready {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-pending {
+  background-color: #ffedd5;
+  color: #9a3412;
+}
+
+.status-earned {
+  background-color: #ede9fe;
+  color: #5b21b6;
+}
+
+.status-denied {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Form elements */
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+}
+.form-input:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #8b5cf6;
+  border-color: transparent;
+}
+
+/* Table styles */
+.table-container {
+  background-color: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 20px -4px rgba(255, 107, 107, 0.15);
+}
+
+.table {
+  width: 100%;
+}
+
+.table th {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: #f9fafb;
+}
+
+.table td {
+  padding: 1rem 1.5rem;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+.table tbody tr {
+  border-top: 1px solid #f3f4f6;
+  transition: background-color 0.2s;
+}
+.table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Page header */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: #1f2937;
+}
+
+/* Avatar */
+.avatar {
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.avatar-sm {
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.875rem;
+}
+
+.avatar-md {
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1rem;
+}
+
+.avatar-lg {
+  width: 4rem;
+  height: 4rem;
+  font-size: 1.25rem;
+}
+
+/* Progress bar */
+.progress-bar {
+  height: 0.5rem;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: all 0.5s;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.empty-state-icon {
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto 1rem;
+  color: #d1d5db;
+}
+
+.empty-state-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state-text {
+  color: #6b7280;
+}
