@@ -20,6 +20,20 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              cream: 'hsl(35, 100%, 98%)',
+            },
+            fontFamily: {
+              nunito: ['Nunito', 'sans-serif'],
+            },
+          }
+        }
+      }
+    </script>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
