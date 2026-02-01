@@ -2,7 +2,7 @@ module Api
   module V1
     class PrizesController < BaseController
       def index
-        prizes = current_user.family.prizes.includes(:groups)
+        prizes = current_user.family.prizes
         render json: prizes.map { |p| prize_json(p) }
       end
 
@@ -46,7 +46,7 @@ module Api
       private
 
       def prize_params
-        params.require(:prize).permit(:name, :description, :point_cost, :status, :image, group_ids: [])
+        params.require(:prize).permit(:name, :description, :point_cost, :active, :image)
       end
 
       def prize_json(prize, detailed: false)
@@ -55,7 +55,7 @@ module Api
           name: prize.name,
           description: prize.description,
           point_cost: prize.point_cost,
-          status: prize.status,
+          active: prize.active,
           created_at: prize.created_at,
           updated_at: prize.updated_at
         }
@@ -65,10 +65,6 @@ module Api
             prize.image,
             host: request.base_url
           )
-        end
-
-        if detailed
-          json[:groups] = prize.groups.map { |g| { id: g.id, name: g.name } }
         end
 
         json
