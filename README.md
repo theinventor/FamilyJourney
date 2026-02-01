@@ -119,6 +119,35 @@ app/
 4. Earn points when approved
 5. Browse and redeem prizes
 
+## Email Notifications
+
+The app sends transactional emails for key events:
+
+| Email | Recipient | Triggered When |
+|-------|-----------|----------------|
+| **Badge Submitted** | All parents in family | Kid submits a badge for review |
+| **Badge Approved** | Kid | Parent approves their badge submission |
+| **Badge Denied** | Kid | Parent denies their badge (includes feedback) |
+| **Redemption Requested** | All parents in family | Kid requests a prize redemption |
+| **Redemption Approved** | Kid | Parent approves their prize request |
+| **Redemption Denied** | Kid | Parent denies their prize request (includes feedback) |
+
+### Email Previews
+
+Preview all emails in development at:
+
+```
+http://localhost:3000/rails/mailers/notification_mailer
+```
+
+Individual previews:
+- `/rails/mailers/notification_mailer/badge_submitted`
+- `/rails/mailers/notification_mailer/badge_approved`
+- `/rails/mailers/notification_mailer/badge_denied`
+- `/rails/mailers/notification_mailer/redemption_requested`
+- `/rails/mailers/notification_mailer/redemption_approved`
+- `/rails/mailers/notification_mailer/redemption_denied`
+
 ## Development
 
 ### Running Tests
