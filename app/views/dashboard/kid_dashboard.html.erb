@@ -68,12 +68,34 @@
     </div>
   </div>
 
+  <% if @denied_badges.any? %>
+    <div>
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Needs Revision</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <% @denied_badges.each do |badge| %>
+          <%= render "badges/badge_card", badge: badge, state: :denied %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <% if @pending_badges.any? %>
     <div>
       <h2 class="text-xl font-bold text-gray-800 mb-4">Pending Review</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         <% @pending_badges.each do |badge| %>
           <%= render "badges/badge_card", badge: badge, state: :pending %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @ready_badges.any? %>
+    <div>
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Ready to Submit</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <% @ready_badges.each do |badge| %>
+          <%= render "badges/badge_card", badge: badge, state: :ready %>
         <% end %>
       </div>
     </div>
@@ -128,7 +150,7 @@
     </div>
   <% end %>
 
-  <% if @available_badges.empty? && @in_progress_badges.empty? && @pending_badges.empty? && @earned_badges.empty? %>
+  <% if @available_badges.empty? && @in_progress_badges.empty? && @pending_badges.empty? && @earned_badges.empty? && @denied_badges.empty? && @ready_badges.empty? %>
     <div class="card">
       <div class="empty-state">
         <svg class="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">

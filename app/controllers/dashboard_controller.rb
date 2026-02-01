@@ -32,108 +32,40 @@ class DashboardController < ApplicationController
   end
 
   def load_kid_dashboard
-    @available_badges = available_badges
-    @in_progress_badges = in_progress_badges
-    @pending_badges = pending_badges
-    @earned_badges = earned_badges
-    @denied_badges = denied_badges
-    @ready_badges = ready_badges
+    # Load all assigned badges for the user and categorize by state
+    all_assigned_badges = Badge.published
+      .where(family: current_user.family)
+      .joins(groups: :group_memberships)
+      .where(group_memberships: { user_id: current_user.id })
+      .distinct
+      .includes(:badge_category, :badge_challenges)
+
+    @earned_badges = []
+    @pending_badges = []
+    @denied_badges = []
+    @ready_badges = []
+    @in_progress_badges = []
+    @available_badges = []
+
+    all_assigned_badges.each do |badge|
+      case badge.state_for(current_user)
+      when :earned
+        @earned_badges << badge
+      when :pending
+        @pending_badges << badge
+      when :denied
+        @denied_badges << badge
+      when :ready
+        @ready_badges << badge
+      when :in_progress
+        @in_progress_badges << badge
+      else
+        @available_badges << badge
+      end
+    end
+
     @categories = current_user.family.badge_categories
 
     render :kid_dashboard
-  end
-
-  def available_badges
-    Badge.published
-      .where(family: current_user.family)
-      .joins(groups: :group_memberships)
-      .where(group_memberships: { user_id: current_user.id })
-      .where.not(id: earned_badge_ids)
-      .where.not(id: pending_badge_ids)
-      .where.not(id: denied_badge_ids)
-      .where.not(id: ready_badge_ids)
-      .distinct
-      .includes(:badge_category, :badge_challenges)
-  end
-
-  def in_progress_badges
-    return Badge.none unless multi_challenge_badge_ids.any?
-
-    Badge.where(id: multi_challenge_badge_ids)
-      .where.not(id: earned_badge_ids)
-      .where.not(id: pending_badge_ids)
-      .joins(:badge_challenges)
-      .where(
-        "badge_challenges.id IN (?)",
-        ChallengeCompletion.where(user: current_user).select(:badge_challenge_id)
-      )
-      .distinct
-      .includes(:badge_category, :badge_challenges)
-  end
-
-  def pending_badges
-    Badge.joins(:badge_submissions)
-      .where(badge_submissions: { user_id: current_user.id, status: "pending_review" })
-      .distinct
-      .includes(:badge_category)
-  end
-
-  def earned_badges
-    Badge.joins(:badge_submissions)
-      .where(badge_submissions: { user_id: current_user.id, status: "approved" })
-      .distinct
-      .includes(:badge_category)
-  end
-
-  def denied_badges
-    Badge.published
-      .where(family: current_user.family)
-      .joins(groups: :group_memberships)
-      .where(group_memberships: { user_id: current_user.id })
-      .where(id: denied_badge_ids)
-      .distinct
-      .includes(:badge_category)
-  end
-
-  def ready_badges
-    Badge.published
-      .where(family: current_user.family)
-      .joins(groups: :group_memberships)
-      .where(group_memberships: { user_id: current_user.id })
-      .where.not(id: earned_badge_ids)
-      .where.not(id: pending_badge_ids)
-      .where.not(id: denied_badge_ids)
-      .joins(:badge_challenges)
-      .distinct
-      .includes(:badge_category, :badge_challenges)
-      .select { |b| b.all_challenges_completed_for?(current_user) }
-  end
-
-  def earned_badge_ids
-    BadgeSubmission.where(user: current_user, status: "approved").select(:badge_id)
-  end
-
-  def pending_badge_ids
-    BadgeSubmission.where(user: current_user, status: "pending_review").select(:badge_id)
-  end
-
-  def denied_badge_ids
-    # Get badge IDs where the latest submission is denied
-    BadgeSubmission.where(user: current_user)
-      .where.not(id: BadgeSubmission.where(user: current_user, status: ["approved", "pending_review"]).select(:id))
-      .where(status: "denied")
-      .select(:badge_id)
-  end
-
-  def ready_badge_ids
-    ready_badges.map(&:id)
-  end
-
-  def multi_challenge_badge_ids
-    Badge.published
-      .where(family: current_user.family)
-      .joins(:badge_challenges)
-      .distinct
-      .pluck(:id)
   end
 end
