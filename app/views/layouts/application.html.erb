@@ -6,6 +6,22 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Family Journey">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="<%= content_for(:description) || "Make family tasks fun & rewarding. Create badges for your kids to earn, track their progress, and let them redeem points for prizes." %>">
+
+    <%# OpenGraph meta tags %>
+    <meta property="og:title" content="<%= content_for(:title) || "Family Journey" %>">
+    <meta property="og:description" content="<%= content_for(:description) || "Make family tasks fun & rewarding. Create badges for your kids to earn, track their progress, and let them redeem points for prizes." %>">
+    <meta property="og:image" content="<%= request.base_url %>/og-image.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:site_name" content="Family Journey">
+
+    <%# Twitter Card meta tags %>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= content_for(:title) || "Family Journey" %>">
+    <meta name="twitter:description" content="<%= content_for(:description) || "Make family tasks fun & rewarding. Create badges for your kids to earn, track their progress, and let them redeem points for prizes." %>">
+    <meta name="twitter:image" content="<%= request.base_url %>/og-image.png">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
