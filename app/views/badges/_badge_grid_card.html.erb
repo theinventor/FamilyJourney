@@ -1,0 +1,89 @@
+<%
+  # Determine if badge is earned or in a "good" state
+  earned_or_good = [:earned, :ready].include?(state)
+
+  # Set colors based on state
+  gradient_class = case state
+    when :earned then "gradient-green"
+    when :ready then "gradient-green"
+    when :pending then "gradient-yellow"
+    when :in_progress then "gradient-teal"
+    when :denied then "bg-red-100"
+    else "bg-gray-100"
+  end
+
+  # For unearned badges (available state), make them faint
+  opacity_class = state == :available ? "opacity-40" : ""
+  text_class = if state == :denied
+    "text-red-800"
+  elsif state == :available
+    "text-gray-600"
+  else
+    "text-white"
+  end
+%>
+
+<%= link_to badge_path(badge), class: "badge-card #{gradient_class} #{text_class} #{opacity_class} block h-full" do %>
+  <div class="flex flex-col items-center text-center h-full">
+    <div class="p-3 rounded-full <%= state == :denied ? 'bg-red-200' : (state == :available ? 'bg-gray-200' : 'bg-white/20') %> mb-2">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+      </svg>
+    </div>
+    <h4 class="font-bold text-sm"><%= badge.title %></h4>
+    <p class="text-xs mt-1 opacity-90 line-clamp-2"><%= badge.description %></p>
+
+    <div class="flex items-center gap-2 mt-2">
+      <span class="inline-flex items-center gap-1 text-xs font-semibold <%= state == :denied ? 'text-red-600' : (state == :available ? 'text-gray-500' : 'text-white/90') %>">
+        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.736 6.979C9.208 6.193 9.696 6 10 6c.304 0 .792.193 1.264.979a1 1 0 001.715-1.029C12.279 4.784 11.232 4 10 4s-2.279.784-2.979 1.95c-.285.475-.507 1-.67 1.55H6a1 1 0 000 2h.013a9.358 9.358 0 000 1H6a1 1 0 100 2h.351c.163.55.385 1.075.67 1.55C7.721 15.216 8.768 16 10 16s2.279-.784 2.979-1.95a1 1 0 10-1.715-1.029c-.472.786-.96.979-1.264.979-.304 0-.792-.193-1.264-.979a4.265 4.265 0 01-.264-.521H10a1 1 0 100-2H8.017a7.36 7.36 0 010-1H10a1 1 0 100-2H8.472c.08-.185.167-.36.264-.521z"></path>
+        </svg>
+        <%= badge.points %>
+      </span>
+
+      <% if badge.multi_challenge? && state == :in_progress %>
+        <span class="text-xs opacity-80">
+          <%= badge.challenges_completed_for(current_user) %>/<%= badge.badge_challenges.count %>
+        </span>
+      <% end %>
+    </div>
+
+    <% if state != :available %>
+      <div class="mt-2 text-xs font-semibold opacity-90">
+        <%= state.to_s.humanize %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if state == :earned %>
+    <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-white flex items-center justify-center text-green-500 text-xs shadow">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+      </svg>
+    </div>
+  <% end %>
+
+  <% if state == :pending %>
+    <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-white flex items-center justify-center text-yellow-500 text-xs shadow">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+      </svg>
+    </div>
+  <% end %>
+
+  <% if state == :ready %>
+    <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-white flex items-center justify-center text-green-500 text-xs shadow">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"></path>
+      </svg>
+    </div>
+  <% end %>
+
+  <% if state == :denied %>
+    <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-white flex items-center justify-center text-red-500 text-xs shadow">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+      </svg>
+    </div>
+  <% end %>
+<% end %>

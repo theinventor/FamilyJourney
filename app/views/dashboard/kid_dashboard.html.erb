@@ -112,43 +112,68 @@
     </div>
   <% end %>
 
-  <% if @available_badges.any? %>
-    <div>
-      <h2 class="text-xl font-bold text-gray-800 mb-4">Available Badges</h2>
-      <% @categories.each do |category| %>
-        <% category_badges = @available_badges.select { |b| b.badge_category_id == category.id } %>
-        <% if category_badges.any? %>
-          <h3 class="text-lg font-semibold text-gray-700 mb-3 mt-6"><%= category.name %></h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            <% category_badges.each do |badge| %>
-              <%= render "badges/badge_card", badge: badge, state: :available %>
-            <% end %>
+  <!-- Badge Grid Dashboard -->
+  <div>
+    <h2 class="text-xl font-bold text-gray-800 mb-4">Badge Progress</h2>
+
+    <% if @categories.any? %>
+      <div class="space-y-4">
+        <% @categories.each do |category| %>
+          <%
+            # Get all badges for this category (earned, pending, in_progress, and available)
+            category_badges = Badge.published
+              .where(family: current_user.family, badge_category_id: category.id)
+              .joins(groups: :group_memberships)
+              .where(group_memberships: { user_id: current_user.id })
+              .distinct
+              .includes(:badge_category, :badge_challenges, :badge_submissions)
+              .order(:title)
+          %>
+
+          <% if category_badges.any? %>
+            <div class="card p-4">
+              <h3 class="text-lg font-bold text-gray-700 mb-3"><%= category.name %></h3>
+              <div class="overflow-x-auto -mx-2 px-2">
+                <div class="flex gap-3 pb-2" style="min-width: min-content;">
+                  <% category_badges.each do |badge| %>
+                    <div style="min-width: 200px; max-width: 200px;">
+                      <%= render "badges/badge_grid_card", badge: badge, state: badge.state_for(current_user) %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+
+        <%
+          # Handle uncategorized badges
+          uncategorized_badges = Badge.published
+            .where(family: current_user.family, badge_category_id: nil)
+            .joins(groups: :group_memberships)
+            .where(group_memberships: { user_id: current_user.id })
+            .distinct
+            .includes(:badge_category, :badge_challenges, :badge_submissions)
+            .order(:title)
+        %>
+
+        <% if uncategorized_badges.any? %>
+          <div class="card p-4">
+            <h3 class="text-lg font-bold text-gray-700 mb-3">Other</h3>
+            <div class="overflow-x-auto -mx-2 px-2">
+              <div class="flex gap-3 pb-2" style="min-width: min-content;">
+                <% uncategorized_badges.each do |badge| %>
+                  <div style="min-width: 200px; max-width: 200px;">
+                    <%= render "badges/badge_grid_card", badge: badge, state: badge.state_for(current_user) %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
           </div>
         <% end %>
-      <% end %>
-
-      <% uncategorized = @available_badges.select { |b| b.badge_category_id.nil? } %>
-      <% if uncategorized.any? %>
-        <h3 class="text-lg font-semibold text-gray-700 mb-3 mt-6">Other</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          <% uncategorized.each do |badge| %>
-            <%= render "badges/badge_card", badge: badge, state: :available %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
-
-  <% if @earned_badges.any? %>
-    <div>
-      <h2 class="text-xl font-bold text-gray-800 mb-4">Earned Badges</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <% @earned_badges.each do |badge| %>
-          <%= render "badges/badge_card", badge: badge, state: :earned %>
-        <% end %>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 
   <% if @available_badges.empty? && @in_progress_badges.empty? && @pending_badges.empty? && @earned_badges.empty? && @denied_badges.empty? && @ready_badges.empty? %>
     <div class="card">
