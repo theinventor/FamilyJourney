@@ -103,7 +103,7 @@
         <p class="text-xs text-gray-500 capitalize"><%= current_user.role %></p>
       </div>
     </div>
-    <%= button_to destroy_user_session_path, method: :delete, class: "w-full text-left text-sm text-gray-500 hover:text-gray-700 transition" do %>
+    <%= button_to destroy_user_session_path, method: :delete, data: { turbo: false }, class: "w-full text-left text-sm text-gray-500 hover:text-gray-700 transition" do %>
       Sign out
     <% end %>
   </div>
