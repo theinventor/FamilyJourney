@@ -68,47 +68,77 @@
     </div>
   </div>
 
-  <% if @denied_badges.any? %>
-    <div>
-      <h2 class="text-xl font-bold text-gray-800 mb-4">Needs Revision</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <% @denied_badges.each do |badge| %>
-          <%= render "badges/badge_card", badge: badge, state: :denied %>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
+  <!-- Collapsible Action Items (collapsed by default to keep Badge Grid prominent) -->
+  <% if @denied_badges.any? || @pending_badges.any? || @ready_badges.any? %>
+    <div class="space-y-3">
+      <% if @denied_badges.any? %>
+        <details class="card">
+          <summary class="cursor-pointer select-none px-4 py-3 flex items-center justify-between hover:bg-gray-50 transition-colors">
+            <div class="flex items-center gap-3">
+              <span class="text-lg font-bold text-red-600">Needs Revision</span>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                <%= @denied_badges.count %>
+              </span>
+            </div>
+            <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </summary>
+          <div class="px-4 pb-4 pt-2">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <% @denied_badges.each do |badge| %>
+                <%= render "badges/badge_card", badge: badge, state: :denied %>
+              <% end %>
+            </div>
+          </div>
+        </details>
+      <% end %>
 
-  <% if @pending_badges.any? %>
-    <div>
-      <h2 class="text-xl font-bold text-gray-800 mb-4">Pending Review</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <% @pending_badges.each do |badge| %>
-          <%= render "badges/badge_card", badge: badge, state: :pending %>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
+      <% if @ready_badges.any? %>
+        <details class="card">
+          <summary class="cursor-pointer select-none px-4 py-3 flex items-center justify-between hover:bg-gray-50 transition-colors">
+            <div class="flex items-center gap-3">
+              <span class="text-lg font-bold text-green-600">Ready to Submit</span>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                <%= @ready_badges.count %>
+              </span>
+            </div>
+            <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </summary>
+          <div class="px-4 pb-4 pt-2">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <% @ready_badges.each do |badge| %>
+                <%= render "badges/badge_card", badge: badge, state: :ready %>
+              <% end %>
+            </div>
+          </div>
+        </details>
+      <% end %>
 
-  <% if @ready_badges.any? %>
-    <div>
-      <h2 class="text-xl font-bold text-gray-800 mb-4">Ready to Submit</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <% @ready_badges.each do |badge| %>
-          <%= render "badges/badge_card", badge: badge, state: :ready %>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
-
-  <% if @in_progress_badges.any? %>
-    <div>
-      <h2 class="text-xl font-bold text-gray-800 mb-4">In Progress</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <% @in_progress_badges.each do |badge| %>
-          <%= render "badges/badge_card", badge: badge, state: :in_progress %>
-        <% end %>
-      </div>
+      <% if @pending_badges.any? %>
+        <details class="card">
+          <summary class="cursor-pointer select-none px-4 py-3 flex items-center justify-between hover:bg-gray-50 transition-colors">
+            <div class="flex items-center gap-3">
+              <span class="text-lg font-bold text-blue-600">Pending Review</span>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                <%= @pending_badges.count %>
+              </span>
+            </div>
+            <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </summary>
+          <div class="px-4 pb-4 pt-2">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <% @pending_badges.each do |badge| %>
+                <%= render "badges/badge_card", badge: badge, state: :pending %>
+              <% end %>
+            </div>
+          </div>
+        </details>
+      <% end %>
     </div>
   <% end %>
 

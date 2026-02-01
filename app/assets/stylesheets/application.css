@@ -415,3 +415,12 @@
 .empty-state-text {
   color: #6b7280;
 }
+
+/* Collapsible details element */
+details[open] > summary svg {
+  transform: rotate(180deg);
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
