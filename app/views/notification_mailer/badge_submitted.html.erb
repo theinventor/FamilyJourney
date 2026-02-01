@@ -1,0 +1,15 @@
+<h2>Badge Submission</h2>
+
+<p><strong><%= @kid.name %></strong> has submitted <strong><%= @badge.title %></strong> for your review.</p>
+
+<% if @submission.kid_notes.present? %>
+  <h3>Kid's Notes:</h3>
+  <p><%= @submission.kid_notes %></p>
+<% end %>
+
+<p>
+  <strong>Badge Points:</strong> <%= @badge.points %><br>
+  <strong>Submitted:</strong> <%= @submission.submitted_at.strftime("%B %d, %Y at %I:%M %p") %>
+</p>
+
+<p>Log in to Family Journey to review this submission.</p>

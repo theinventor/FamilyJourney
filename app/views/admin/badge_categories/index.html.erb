@@ -1,0 +1,69 @@
+<div class="page-header">
+  <h1 class="page-title">Badge Categories</h1>
+  <%= link_to "New Category", new_admin_badge_category_path, class: "btn-primary" %>
+</div>
+
+<% if @badge_categories.any? %>
+  <div class="card">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Order</th>
+          <th>Name</th>
+          <th>Badges</th>
+          <th class="text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @badge_categories.each_with_index do |category, index| %>
+          <tr>
+            <td>
+              <div class="flex items-center gap-2">
+                <% if index > 0 %>
+                  <%= button_to move_up_admin_badge_category_path(category), method: :post, class: "p-1 hover:bg-gray-100 rounded" do %>
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                    </svg>
+                  <% end %>
+                <% else %>
+                  <div class="w-7"></div>
+                <% end %>
+                <% if index < @badge_categories.length - 1 %>
+                  <%= button_to move_down_admin_badge_category_path(category), method: :post, class: "p-1 hover:bg-gray-100 rounded" do %>
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  <% end %>
+                <% else %>
+                  <div class="w-7"></div>
+                <% end %>
+              </div>
+            </td>
+            <td class="font-semibold"><%= category.name %></td>
+            <td><%= category.badges.count %></td>
+            <td class="text-right">
+              <div class="flex justify-end gap-2">
+                <%= link_to "Edit", edit_admin_badge_category_path(category), class: "btn-secondary btn-sm" %>
+                <%= button_to "Delete", admin_badge_category_path(category),
+                    method: :delete,
+                    class: "btn-danger btn-sm",
+                    data: { turbo_confirm: "Delete this category? Badges in this category will become uncategorized." } %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="card">
+    <div class="empty-state">
+      <svg class="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+      </svg>
+      <h3 class="empty-state-title">No categories yet</h3>
+      <p class="empty-state-text mb-4">Create categories to organize your badges.</p>
+      <%= link_to "Create Your First Category", new_admin_badge_category_path, class: "btn-primary" %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,13 @@
+Prize Request
+
+<%= @kid.name %> has requested the <%= @prize.name %> prize.
+
+Point Cost: <%= @prize.point_cost %>
+Kid's Current Balance: <%= @kid.available_points %> points
+
+<% if @redemption.kid_note.present? %>
+Kid's Note:
+<%= @redemption.kid_note %>
+<% end %>
+
+Log in to Family Journey to approve or deny this request.

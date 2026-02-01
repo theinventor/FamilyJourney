@@ -1,0 +1,123 @@
+<div class="page-header">
+  <div class="flex items-center gap-4">
+    <div class="p-3 rounded-2xl gradient-purple">
+      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+      </svg>
+    </div>
+    <div>
+      <h1 class="page-title"><%= @badge.title %></h1>
+      <div class="flex items-center gap-2 mt-1">
+        <% if @badge.published? %>
+          <span class="status-earned">Published</span>
+        <% else %>
+          <span class="status-pending">Draft</span>
+        <% end %>
+        <span class="text-gray-400">|</span>
+        <span class="inline-flex items-center gap-1 text-yellow-600 font-semibold">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.736 6.979C9.208 6.193 9.696 6 10 6c.304 0 .792.193 1.264.979a1 1 0 001.715-1.029C12.279 4.784 11.232 4 10 4s-2.279.784-2.979 1.95c-.285.475-.507 1-.67 1.55H6a1 1 0 000 2h.013a9.358 9.358 0 000 1H6a1 1 0 100 2h.351c.163.55.385 1.075.67 1.55C7.721 15.216 8.768 16 10 16s2.279-.784 2.979-1.95a1 1 0 10-1.715-1.029c-.472.786-.96.979-1.264.979-.304 0-.792-.193-1.264-.979a4.265 4.265 0 01-.264-.521H10a1 1 0 100-2H8.017a7.36 7.36 0 010-1H10a1 1 0 100-2H8.472c.08-.185.167-.36.264-.521z"></path>
+          </svg>
+          <%= @badge.points %> points
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="flex gap-2">
+    <% if @badge.draft? %>
+      <%= button_to "Publish", publish_admin_badge_path(@badge), method: :post, class: "btn-success" %>
+    <% else %>
+      <%= button_to "Unpublish", unpublish_admin_badge_path(@badge), method: :post, class: "btn-secondary" %>
+    <% end %>
+    <%= link_to "Edit", edit_admin_badge_path(@badge), class: "btn-outline" %>
+    <%= link_to "Back", admin_badges_path, class: "btn-secondary" %>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+  <div class="lg:col-span-2 space-y-6">
+    <div class="card">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Details</h2>
+
+      <% if @badge.badge_category %>
+        <div class="mb-4">
+          <p class="text-sm text-gray-500">Category</p>
+          <p class="font-medium"><%= @badge.badge_category.name %></p>
+        </div>
+      <% end %>
+
+      <% if @badge.description.present? %>
+        <div class="mb-4">
+          <p class="text-sm text-gray-500">Description</p>
+          <p class="text-gray-700"><%= @badge.description %></p>
+        </div>
+      <% end %>
+
+      <% if @badge.instructions.present? %>
+        <div>
+          <p class="text-sm text-gray-500">Instructions</p>
+          <p class="text-gray-700 whitespace-pre-wrap"><%= @badge.instructions %></p>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="card">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-bold text-gray-800">Challenges</h2>
+        <%= link_to "Manage Challenges", edit_admin_badge_path(@badge, anchor: "challenges"), class: "btn-secondary btn-sm" %>
+      </div>
+
+      <% if @badge.badge_challenges.any? %>
+        <ol class="space-y-3">
+          <% @badge.badge_challenges.each_with_index do |challenge, index| %>
+            <li class="flex gap-3 p-3 bg-gray-50 rounded-xl">
+              <div class="flex-shrink-0 w-7 h-7 rounded-full gradient-teal flex items-center justify-center text-white text-sm font-bold">
+                <%= index + 1 %>
+              </div>
+              <div>
+                <p class="font-medium text-gray-800"><%= challenge.title %></p>
+                <% if challenge.description.present? %>
+                  <p class="text-sm text-gray-600 mt-1"><%= challenge.description %></p>
+                <% end %>
+              </div>
+            </li>
+          <% end %>
+        </ol>
+      <% else %>
+        <p class="text-gray-500 text-center py-4">No challenges. Kids can submit directly for this badge.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="space-y-6">
+    <div class="card">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Assigned Groups</h2>
+
+      <% if @badge.groups.any? %>
+        <div class="space-y-2">
+          <% @badge.groups.each do |group| %>
+            <div class="flex items-center gap-2 p-2 bg-gray-50 rounded-lg">
+              <div class="p-1.5 rounded-lg gradient-teal">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </div>
+              <span class="font-medium text-sm"><%= group.name %></span>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-gray-500 text-sm">Not assigned to any groups yet.</p>
+        <%= link_to "Assign Groups", edit_admin_badge_path(@badge), class: "btn-primary btn-sm mt-3 block text-center" %>
+      <% end %>
+    </div>
+
+    <div class="card">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Danger Zone</h2>
+      <%= button_to "Delete Badge", admin_badge_path(@badge),
+          method: :delete,
+          class: "btn-danger w-full",
+          data: { turbo_confirm: "Are you sure you want to delete this badge? This cannot be undone." } %>
+    </div>
+  </div>
+</div>

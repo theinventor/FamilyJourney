@@ -1,0 +1,67 @@
+<div class="max-w-2xl mx-auto">
+  <div class="page-header">
+    <h1 class="page-title">Redemption Details</h1>
+    <%= link_to "Back", redemptions_path, class: "btn-outline" %>
+  </div>
+
+  <div class="card">
+    <div class="flex items-start gap-4 mb-6 pb-6 border-b">
+      <% if @redemption.prize.image.attached? %>
+        <%= image_tag @redemption.prize.image, class: "w-24 h-24 object-cover rounded-xl" %>
+      <% else %>
+        <div class="w-24 h-24 bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl flex items-center justify-center">
+          <svg class="w-12 h-12 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path>
+          </svg>
+        </div>
+      <% end %>
+      <div>
+        <h2 class="text-xl font-bold text-gray-800"><%= @redemption.prize.name %></h2>
+        <div class="flex items-center gap-3 mt-2">
+          <% case @redemption.status %>
+          <% when "pending" %>
+            <span class="status-pending">Pending Review</span>
+          <% when "approved" %>
+            <span class="status-earned">Approved</span>
+          <% when "denied" %>
+            <span class="status-denied">Denied</span>
+          <% end %>
+          <span class="inline-flex items-center gap-1 text-yellow-600 font-semibold">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.736 6.979C9.208 6.193 9.696 6 10 6c.304 0 .792.193 1.264.979a1 1 0 001.715-1.029C12.279 4.784 11.232 4 10 4s-2.279.784-2.979 1.95c-.285.475-.507 1-.67 1.55H6a1 1 0 000 2h.013a9.358 9.358 0 000 1H6a1 1 0 100 2h.351c.163.55.385 1.075.67 1.55C7.721 15.216 8.768 16 10 16s2.279-.784 2.979-1.95a1 1 0 10-1.715-1.029c-.472.786-.96.979-1.264.979-.304 0-.792-.193-1.264-.979a4.265 4.265 0 01-.264-.521H10a1 1 0 100-2H8.017a7.36 7.36 0 010-1H10a1 1 0 100-2H8.472c.08-.185.167-.36.264-.521z"></path>
+            </svg>
+            <%= @redemption.points_spent %> points
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <div>
+        <p class="text-sm text-gray-500">Requested</p>
+        <p class="text-gray-800"><%= @redemption.requested_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+      </div>
+
+      <% if @redemption.kid_note.present? %>
+        <div>
+          <p class="text-sm text-gray-500">Your Note</p>
+          <p class="text-gray-800"><%= @redemption.kid_note %></p>
+        </div>
+      <% end %>
+
+      <% if @redemption.reviewed_at %>
+        <div>
+          <p class="text-sm text-gray-500">Reviewed</p>
+          <p class="text-gray-800"><%= @redemption.reviewed_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+        </div>
+      <% end %>
+
+      <% if @redemption.parent_feedback.present? %>
+        <div class="p-4 rounded-xl <%= @redemption.approved? ? 'bg-green-50' : 'bg-red-50' %>">
+          <p class="text-sm <%= @redemption.approved? ? 'text-green-600' : 'text-red-600' %> mb-1">Parent Feedback</p>
+          <p class="<%= @redemption.approved? ? 'text-green-800' : 'text-red-800' %>"><%= @redemption.parent_feedback %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

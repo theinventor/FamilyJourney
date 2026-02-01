@@ -1,0 +1,103 @@
+<div class="page-header">
+  <h1 class="page-title">Prize Requests</h1>
+</div>
+
+<div class="space-y-8">
+  <div>
+    <h2 class="text-xl font-bold text-gray-800 mb-4">
+      Pending Requests
+      <% if @pending_redemptions.any? %>
+        <span class="ml-2 px-2 py-1 rounded-full bg-orange-100 text-orange-800 text-sm font-semibold">
+          <%= @pending_redemptions.count %>
+        </span>
+      <% end %>
+    </h2>
+
+    <% if @pending_redemptions.any? %>
+      <div class="space-y-4">
+        <% @pending_redemptions.each do |redemption| %>
+          <div class="card card-hover">
+            <div class="flex items-start justify-between">
+              <div class="flex items-center gap-4">
+                <div class="avatar avatar-md gradient-coral text-white">
+                  <%= redemption.user.name.first.upcase %>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-800"><%= redemption.user.name %></h3>
+                  <p class="text-sm text-gray-600">
+                    Requested <strong><%= redemption.prize.name %></strong>
+                  </p>
+                  <p class="text-xs text-gray-500 mt-1">
+                    <%= time_ago_in_words(redemption.requested_at) %> ago
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1 text-yellow-600 font-semibold text-sm">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.736 6.979C9.208 6.193 9.696 6 10 6c.304 0 .792.193 1.264.979a1 1 0 001.715-1.029C12.279 4.784 11.232 4 10 4s-2.279.784-2.979 1.95c-.285.475-.507 1-.67 1.55H6a1 1 0 000 2h.013a9.358 9.358 0 000 1H6a1 1 0 100 2h.351c.163.55.385 1.075.67 1.55C7.721 15.216 8.768 16 10 16s2.279-.784 2.979-1.95a1 1 0 10-1.715-1.029c-.472.786-.96.979-1.264.979-.304 0-.792-.193-1.264-.979a4.265 4.265 0 01-.264-.521H10a1 1 0 100-2H8.017a7.36 7.36 0 010-1H10a1 1 0 100-2H8.472c.08-.185.167-.36.264-.521z"></path>
+                  </svg>
+                  <%= redemption.points_spent %>
+                </span>
+                <%= link_to "Review", admin_redemption_path(redemption), class: "btn-primary btn-sm" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="card">
+        <div class="empty-state">
+          <svg class="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <h3 class="empty-state-title">All caught up!</h3>
+          <p class="empty-state-text">No prize requests waiting for review.</p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @recent_redemptions.any? %>
+    <div>
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Recent Decisions</h2>
+      <div class="card">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Kid</th>
+              <th>Prize</th>
+              <th>Points</th>
+              <th>Status</th>
+              <th>Reviewed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @recent_redemptions.each do |redemption| %>
+              <tr>
+                <td>
+                  <div class="flex items-center gap-2">
+                    <div class="avatar avatar-sm gradient-teal text-white">
+                      <%= redemption.user.name.first.upcase %>
+                    </div>
+                    <%= redemption.user.name %>
+                  </div>
+                </td>
+                <td><%= redemption.prize.name %></td>
+                <td><%= redemption.points_spent %></td>
+                <td>
+                  <% if redemption.approved? %>
+                    <span class="status-earned">Approved</span>
+                  <% else %>
+                    <span class="status-denied">Denied</span>
+                  <% end %>
+                </td>
+                <td><%= redemption.reviewed_at.strftime("%b %d, %Y") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+</div>

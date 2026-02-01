@@ -1,0 +1,12 @@
+Congratulations, <%= @kid.name %>!
+
+You earned the <%= @badge.title %> badge!
+
+You received <%= @badge.points %> points for this achievement.
+
+<% if @submission.parent_feedback.present? %>
+Parent Feedback:
+<%= @submission.parent_feedback %>
+<% end %>
+
+Keep up the great work!

@@ -1,0 +1,112 @@
+<div class="max-w-3xl mx-auto">
+  <div class="page-header">
+    <h1 class="page-title">Review Prize Request</h1>
+    <%= link_to "Back", admin_redemptions_path, class: "btn-outline" %>
+  </div>
+
+  <div class="space-y-6">
+    <div class="card">
+      <div class="flex items-center gap-4 mb-6 pb-6 border-b">
+        <div class="avatar avatar-lg gradient-coral text-white">
+          <%= @redemption.user.name.first.upcase %>
+        </div>
+        <div>
+          <h2 class="text-xl font-bold text-gray-800"><%= @redemption.user.name %></h2>
+          <p class="text-gray-600">Requested <strong><%= @redemption.prize.name %></strong></p>
+          <p class="text-sm text-gray-500 mt-1">
+            <%= @redemption.requested_at.strftime("%B %d, %Y at %I:%M %p") %>
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6 mb-6">
+        <div>
+          <p class="text-sm text-gray-500">Points to Spend</p>
+          <p class="text-2xl font-bold text-yellow-600"><%= @redemption.points_spent %></p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Kid's Current Balance</p>
+          <p class="text-2xl font-bold text-gray-800"><%= @redemption.user.available_points %></p>
+          <% unless @redemption.user_can_still_afford? %>
+            <p class="text-sm text-red-600 font-semibold">Insufficient points!</p>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-xl mb-6">
+        <% if @redemption.prize.image.attached? %>
+          <%= image_tag @redemption.prize.image, class: "w-20 h-20 object-cover rounded-xl" %>
+        <% else %>
+          <div class="w-20 h-20 bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl flex items-center justify-center">
+            <svg class="w-10 h-10 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path>
+            </svg>
+          </div>
+        <% end %>
+        <div>
+          <h3 class="font-bold text-gray-800"><%= @redemption.prize.name %></h3>
+          <% if @redemption.prize.description.present? %>
+            <p class="text-sm text-gray-600 mt-1"><%= @redemption.prize.description %></p>
+          <% end %>
+        </div>
+      </div>
+
+      <% if @redemption.kid_note.present? %>
+        <div class="mb-6">
+          <p class="text-sm text-gray-500 mb-1">Kid's Note</p>
+          <p class="text-gray-800 bg-purple-50 rounded-xl p-4"><%= @redemption.kid_note %></p>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="card">
+      <h3 class="text-lg font-bold text-gray-800 mb-4">Your Decision</h3>
+
+      <div class="space-y-4">
+        <div>
+          <label for="feedback" class="form-label">Feedback (required for denial)</label>
+          <textarea id="feedback" name="feedback" rows="3" class="form-textarea"
+            placeholder="Optional feedback for approval, required for denial..."></textarea>
+        </div>
+
+        <div class="flex gap-3">
+          <% if @redemption.user_can_still_afford? %>
+            <%= button_to "Approve", approve_admin_redemption_path(@redemption),
+                method: :post,
+                class: "btn-success flex-1",
+                form: { data: { turbo_confirm: "Approve this request and deduct #{@redemption.points_spent} points?" } },
+                params: { feedback: "" },
+                id: "approve-btn" %>
+          <% else %>
+            <button disabled class="btn bg-gray-300 text-gray-500 cursor-not-allowed flex-1">
+              Can't Approve (Insufficient Points)
+            </button>
+          <% end %>
+
+          <%= button_to "Deny", deny_admin_redemption_path(@redemption),
+              method: :post,
+              class: "btn-danger flex-1",
+              form: { data: { turbo_confirm: "Deny this request?" } },
+              params: { feedback: "" },
+              id: "deny-btn" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const feedbackField = document.getElementById('feedback');
+    const approveBtn = document.getElementById('approve-btn');
+    const denyBtn = document.getElementById('deny-btn');
+
+    feedbackField.addEventListener('input', function() {
+      const feedback = this.value;
+      if (approveBtn) {
+        approveBtn.closest('form').querySelector('[name="feedback"]').value = feedback;
+      }
+      denyBtn.closest('form').querySelector('[name="feedback"]').value = feedback;
+    });
+  });
+</script>

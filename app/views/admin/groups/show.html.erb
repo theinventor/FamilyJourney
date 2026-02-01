@@ -1,0 +1,70 @@
+<div class="page-header">
+  <div>
+    <h1 class="page-title"><%= @group.name %></h1>
+    <% if @group.description.present? %>
+      <p class="text-gray-600 mt-1"><%= @group.description %></p>
+    <% end %>
+  </div>
+  <div class="flex gap-2">
+    <%= link_to "Edit", edit_admin_group_path(@group), class: "btn-secondary" %>
+    <%= link_to "Back", admin_groups_path, class: "btn-outline" %>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+  <div class="card">
+    <h2 class="text-xl font-bold text-gray-800 mb-4">Members (<%= @group.users.count %>)</h2>
+
+    <% if @group.users.any? %>
+      <div class="space-y-3">
+        <% @group.users.each do |user| %>
+          <div class="member-tag justify-between">
+            <div class="flex items-center gap-3">
+              <div class="avatar avatar-sm gradient-purple text-white">
+                <%= user.name.first.upcase %>
+              </div>
+              <span class="font-medium"><%= user.name %></span>
+            </div>
+            <%= button_to "Remove", remove_member_admin_group_path(@group, user_id: user.id),
+                method: :post,
+                class: "text-red-500 hover:text-red-700 text-sm font-medium",
+                data: { turbo_confirm: "Remove #{user.name} from this group?" } %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500 text-center py-4">No members in this group yet.</p>
+    <% end %>
+  </div>
+
+  <div class="card">
+    <h2 class="text-xl font-bold text-gray-800 mb-4">Add Members</h2>
+
+    <% if @available_kids.any? %>
+      <div class="space-y-3">
+        <% @available_kids.each do |kid| %>
+          <div class="member-tag justify-between">
+            <div class="flex items-center gap-3">
+              <div class="avatar avatar-sm gradient-teal text-white">
+                <%= kid.name.first.upcase %>
+              </div>
+              <span class="font-medium"><%= kid.name %></span>
+            </div>
+            <%= button_to "Add", add_member_admin_group_path(@group, user_id: kid.id),
+                method: :post,
+                class: "btn-primary btn-sm" %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500 text-center py-4">All kids are already in this group.</p>
+    <% end %>
+  </div>
+</div>
+
+<div class="mt-8">
+  <%= button_to "Delete Group", admin_group_path(@group),
+      method: :delete,
+      class: "btn-danger",
+      data: { turbo_confirm: "Are you sure you want to delete this group? This cannot be undone." } %>
+</div>

@@ -1,0 +1,113 @@
+<div class="max-w-3xl mx-auto">
+  <div class="page-header">
+    <h1 class="page-title">Review Submission</h1>
+    <%= link_to "Back", admin_reviews_path, class: "btn-outline" %>
+  </div>
+
+  <div class="space-y-6">
+    <div class="card">
+      <div class="flex items-center gap-4 mb-6 pb-6 border-b">
+        <div class="avatar avatar-lg gradient-coral text-white">
+          <%= @submission.user.name.first.upcase %>
+        </div>
+        <div>
+          <h2 class="text-xl font-bold text-gray-800"><%= @submission.user.name %></h2>
+          <p class="text-gray-600">Submitted for <strong><%= @submission.badge.title %></strong></p>
+          <p class="text-sm text-gray-500 mt-1">
+            <%= @submission.submitted_at.strftime("%B %d, %Y at %I:%M %p") %>
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6 mb-6">
+        <div>
+          <p class="text-sm text-gray-500">Badge Points</p>
+          <p class="text-2xl font-bold text-yellow-600"><%= @submission.badge.points %></p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Category</p>
+          <p class="font-semibold text-gray-800"><%= @submission.badge.badge_category&.name || "Uncategorized" %></p>
+        </div>
+      </div>
+
+      <% if @submission.badge.instructions.present? %>
+        <div class="mb-6">
+          <p class="text-sm text-gray-500 mb-1">Badge Instructions</p>
+          <p class="text-gray-700 bg-gray-50 rounded-xl p-4 whitespace-pre-wrap"><%= @submission.badge.instructions %></p>
+        </div>
+      <% end %>
+
+      <% if @submission.kid_notes.present? %>
+        <div class="mb-6">
+          <p class="text-sm text-gray-500 mb-1">Kid's Notes</p>
+          <p class="text-gray-800 bg-purple-50 rounded-xl p-4"><%= @submission.kid_notes %></p>
+        </div>
+      <% end %>
+
+      <% if @submission.attachments.attached? %>
+        <div class="mb-6">
+          <p class="text-sm text-gray-500 mb-2">Attachments (<%= @submission.attachments.count %>)</p>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <% @submission.attachments.each do |attachment| %>
+              <% if attachment.image? %>
+                <a href="<%= rails_blob_path(attachment) %>" target="_blank" class="block">
+                  <%= image_tag attachment, class: "rounded-xl object-cover w-full h-40 hover:opacity-90 transition" %>
+                </a>
+              <% else %>
+                <div class="p-4 bg-gray-100 rounded-xl">
+                  <svg class="w-8 h-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                  </svg>
+                  <p class="text-sm font-medium truncate"><%= attachment.filename %></p>
+                  <%= link_to "Download", rails_blob_path(attachment, disposition: "attachment"), class: "text-sm text-purple-600 hover:underline" %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="card">
+      <h3 class="text-lg font-bold text-gray-800 mb-4">Your Decision</h3>
+
+      <div class="space-y-4">
+        <div>
+          <label for="feedback" class="form-label">Feedback (required for denial)</label>
+          <textarea id="feedback" name="feedback" rows="3" class="form-textarea"
+            placeholder="Optional feedback for approval, required for denial..."></textarea>
+        </div>
+
+        <div class="flex gap-3">
+          <%= button_to "Approve", approve_admin_review_path(@submission),
+              method: :post,
+              class: "btn-success flex-1",
+              form: { data: { turbo_confirm: "Approve this submission and award #{@submission.badge.points} points?" } },
+              params: { feedback: "" },
+              id: "approve-btn" %>
+
+          <%= button_to "Deny", deny_admin_review_path(@submission),
+              method: :post,
+              class: "btn-danger flex-1",
+              form: { data: { turbo_confirm: "Deny this submission? The kid will receive your feedback." } },
+              params: { feedback: "" },
+              id: "deny-btn" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const feedbackField = document.getElementById('feedback');
+    const approveBtn = document.getElementById('approve-btn');
+    const denyBtn = document.getElementById('deny-btn');
+
+    feedbackField.addEventListener('input', function() {
+      const feedback = this.value;
+      approveBtn.closest('form').querySelector('[name="feedback"]').value = feedback;
+      denyBtn.closest('form').querySelector('[name="feedback"]').value = feedback;
+    });
+  });
+</script>

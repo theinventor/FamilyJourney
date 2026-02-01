@@ -1,0 +1,12 @@
+<h2>Prize Approved!</h2>
+
+<p>Great news, <%= @kid.name %>! Your request for <strong><%= @prize.name %></strong> has been approved!</p>
+
+<p><strong><%= @redemption.points_spent %> points</strong> have been deducted from your balance.</p>
+
+<% if @redemption.parent_feedback.present? %>
+  <h3>Parent Note:</h3>
+  <p><%= @redemption.parent_feedback %></p>
+<% end %>
+
+<p>Enjoy your prize!</p>

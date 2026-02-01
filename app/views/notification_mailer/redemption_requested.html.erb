@@ -1,0 +1,15 @@
+<h2>Prize Request</h2>
+
+<p><strong><%= @kid.name %></strong> has requested the <strong><%= @prize.name %></strong> prize.</p>
+
+<p>
+  <strong>Point Cost:</strong> <%= @prize.point_cost %><br>
+  <strong>Kid's Current Balance:</strong> <%= @kid.available_points %> points
+</p>
+
+<% if @redemption.kid_note.present? %>
+  <h3>Kid's Note:</h3>
+  <p><%= @redemption.kid_note %></p>
+<% end %>
+
+<p>Log in to Family Journey to approve or deny this request.</p>

@@ -1,0 +1,120 @@
+<div class="max-w-4xl mx-auto space-y-8">
+  <div class="card">
+    <div class="flex items-center gap-6">
+      <div class="avatar avatar-lg gradient-coral text-white text-3xl">
+        <%= current_user.name.first.upcase %>
+      </div>
+      <div>
+        <h1 class="text-3xl font-extrabold text-gray-800"><%= current_user.name %></h1>
+        <p class="text-gray-600"><%= current_user.email %></p>
+        <p class="text-sm text-gray-500 capitalize mt-1"><%= current_user.role %> in <%= current_user.family.name %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="stat-card gradient-coral">
+      <div class="flex items-start justify-between">
+        <div>
+          <p class="text-sm opacity-90">Available Points</p>
+          <p class="text-3xl font-extrabold mt-1"><%= current_user.available_points %></p>
+          <p class="text-xs mt-1 opacity-80">Ready to spend</p>
+        </div>
+        <div class="p-3 rounded-xl bg-white/20">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card gradient-yellow">
+      <div class="flex items-start justify-between">
+        <div>
+          <p class="text-sm opacity-90">Lifetime Points</p>
+          <p class="text-3xl font-extrabold mt-1"><%= current_user.lifetime_points %></p>
+          <p class="text-xs mt-1 opacity-80">Total earned</p>
+        </div>
+        <div class="p-3 rounded-xl bg-white/20">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card gradient-purple">
+      <div class="flex items-start justify-between">
+        <div>
+          <p class="text-sm opacity-90">Badges Earned</p>
+          <p class="text-3xl font-extrabold mt-1"><%= @earned_badges.count %></p>
+          <p class="text-xs mt-1 opacity-80">Keep it up!</p>
+        </div>
+        <div class="p-3 rounded-xl bg-white/20">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% if @earned_badges.any? %>
+    <div class="card">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Earned Badges</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <% @earned_badges.each do |submission| %>
+          <div class="badge-card gradient-green">
+            <div class="flex flex-col items-center text-center">
+              <div class="p-3 rounded-full bg-white/20 mb-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                </svg>
+              </div>
+              <h4 class="font-bold text-sm"><%= submission.badge.title %></h4>
+              <p class="text-xs mt-1 opacity-90"><%= submission.badge.points %> pts</p>
+            </div>
+            <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-white flex items-center justify-center text-green-500 text-xs shadow">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @redemptions.any? %>
+    <div class="card">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Recent Prizes Redeemed</h2>
+      <div class="space-y-3">
+        <% @redemptions.each do |redemption| %>
+          <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+            <div class="flex items-center gap-3">
+              <% if redemption.prize.image.attached? %>
+                <%= image_tag redemption.prize.image, class: "w-12 h-12 object-cover rounded-lg" %>
+              <% else %>
+                <div class="w-12 h-12 bg-gradient-to-br from-yellow-100 to-orange-100 rounded-lg flex items-center justify-center">
+                  <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path>
+                  </svg>
+                </div>
+              <% end %>
+              <div>
+                <p class="font-semibold text-gray-800"><%= redemption.prize.name %></p>
+                <p class="text-sm text-gray-500"><%= redemption.reviewed_at.strftime("%B %d, %Y") %></p>
+              </div>
+            </div>
+            <span class="inline-flex items-center gap-1 text-yellow-600 font-semibold">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.736 6.979C9.208 6.193 9.696 6 10 6c.304 0 .792.193 1.264.979a1 1 0 001.715-1.029C12.279 4.784 11.232 4 10 4s-2.279.784-2.979 1.95c-.285.475-.507 1-.67 1.55H6a1 1 0 000 2h.013a9.358 9.358 0 000 1H6a1 1 0 100 2h.351c.163.55.385 1.075.67 1.55C7.721 15.216 8.768 16 10 16s2.279-.784 2.979-1.95a1 1 0 10-1.715-1.029c-.472.786-.96.979-1.264.979-.304 0-.792-.193-1.264-.979a4.265 4.265 0 01-.264-.521H10a1 1 0 100-2H8.017a7.36 7.36 0 010-1H10a1 1 0 100-2H8.472c.08-.185.167-.36.264-.521z"></path>
+              </svg>
+              -<%= redemption.points_spent %>
+            </span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

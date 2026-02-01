@@ -1,0 +1,13 @@
+Badge Submission
+
+<%= @kid.name %> has submitted <%= @badge.title %> for your review.
+
+<% if @submission.kid_notes.present? %>
+Kid's Notes:
+<%= @submission.kid_notes %>
+<% end %>
+
+Badge Points: <%= @badge.points %>
+Submitted: <%= @submission.submitted_at.strftime("%B %d, %Y at %I:%M %p") %>
+
+Log in to Family Journey to review this submission.

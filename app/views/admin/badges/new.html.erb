@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h1 class="page-title">New Badge</h1>
+  <%= link_to "Back", admin_badges_path, class: "btn-outline" %>
+</div>
+
+<div class="card max-w-3xl">
+  <%= render "form", badge: @badge %>
+</div>

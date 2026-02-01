@@ -1,0 +1,134 @@
+<div class="min-h-screen bg-cream">
+  <div class="max-w-6xl mx-auto px-6 py-12">
+    <nav class="flex items-center justify-between mb-16">
+      <h1 class="text-2xl font-extrabold">
+        <span class="gradient-text">Family</span>Journey
+      </h1>
+      <div class="flex items-center gap-4">
+        <%= link_to "Sign In", new_user_session_path, class: "text-gray-600 hover:text-gray-800 font-medium" %>
+        <%= link_to "Sign Up", new_user_registration_path, class: "btn-primary btn-sm" %>
+      </div>
+    </nav>
+
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div>
+        <h2 class="text-5xl font-extrabold text-gray-800 leading-tight mb-6">
+          Make family tasks
+          <span class="gradient-text">fun & rewarding</span>
+        </h2>
+        <p class="text-xl text-gray-600 mb-8">
+          Create badges for your kids to earn, track their progress, and let them redeem points for prizes. Turn chores into adventures!
+        </p>
+        <div class="flex items-center gap-4">
+          <%= link_to "Get Started Free", new_user_registration_path, class: "btn-primary text-lg px-8 py-4" %>
+          <%= link_to "Learn More", "#features", class: "btn-outline text-lg px-8 py-4" %>
+        </div>
+      </div>
+
+      <div class="relative">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="stat-card gradient-coral">
+            <div class="flex items-start justify-between">
+              <div>
+                <p class="text-sm opacity-90">Total Points</p>
+                <p class="text-3xl font-extrabold mt-1">450</p>
+                <p class="text-xs mt-1 opacity-80">Keep going!</p>
+              </div>
+              <div class="p-3 rounded-xl bg-white/20">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card gradient-purple">
+            <div class="flex items-start justify-between">
+              <div>
+                <p class="text-sm opacity-90">Badges Earned</p>
+                <p class="text-3xl font-extrabold mt-1">12</p>
+                <p class="text-xs mt-1 opacity-80">Nice work!</p>
+              </div>
+              <div class="p-3 rounded-xl bg-white/20">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="badge-card gradient-green col-span-2">
+            <div class="flex items-center gap-4">
+              <div class="p-3 rounded-full bg-white/20">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-lg">Clean Room Champion!</h4>
+                <p class="text-sm opacity-90">Earned 50 points</p>
+              </div>
+              <div class="ml-auto w-8 h-8 rounded-full bg-white flex items-center justify-center text-green-500">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="features" class="mt-24">
+      <h3 class="text-3xl font-extrabold text-gray-800 text-center mb-12">
+        How it works
+      </h3>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="card text-center">
+          <div class="w-16 h-16 rounded-2xl gradient-coral mx-auto mb-4 flex items-center justify-center">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+          </div>
+          <h4 class="text-xl font-bold text-gray-800 mb-2">Create Badges</h4>
+          <p class="text-gray-600">Parents create badges for tasks, skills, or achievements they want to encourage.</p>
+        </div>
+
+        <div class="card text-center">
+          <div class="w-16 h-16 rounded-2xl gradient-teal mx-auto mb-4 flex items-center justify-center">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h4 class="text-xl font-bold text-gray-800 mb-2">Kids Complete & Submit</h4>
+          <p class="text-gray-600">Kids complete challenges, upload proof, and submit for review.</p>
+        </div>
+
+        <div class="card text-center">
+          <div class="w-16 h-16 rounded-2xl gradient-yellow mx-auto mb-4 flex items-center justify-center">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path>
+            </svg>
+          </div>
+          <h4 class="text-xl font-bold text-gray-800 mb-2">Earn & Redeem</h4>
+          <p class="text-gray-600">Kids earn points and redeem them for prizes you create.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-24 text-center">
+      <h3 class="text-3xl font-extrabold text-gray-800 mb-4">
+        Ready to get started?
+      </h3>
+      <p class="text-xl text-gray-600 mb-8">
+        Join families making everyday tasks more fun!
+      </p>
+      <%= link_to "Create Your Family Account", new_user_registration_path, class: "btn-primary text-lg px-8 py-4" %>
+    </div>
+
+    <footer class="mt-24 text-center text-gray-500 text-sm">
+      <p>&copy; <%= Date.current.year %> FamilyJourney. Made with love for families.</p>
+    </footer>
+  </div>
+</div>

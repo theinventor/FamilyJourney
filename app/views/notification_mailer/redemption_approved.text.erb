@@ -1,0 +1,12 @@
+Prize Approved!
+
+Great news, <%= @kid.name %>! Your request for <%= @prize.name %> has been approved!
+
+<%= @redemption.points_spent %> points have been deducted from your balance.
+
+<% if @redemption.parent_feedback.present? %>
+Parent Note:
+<%= @redemption.parent_feedback %>
+<% end %>
+
+Enjoy your prize!

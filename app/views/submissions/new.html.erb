@@ -1,0 +1,44 @@
+<div class="max-w-2xl mx-auto">
+  <div class="page-header">
+    <h1 class="page-title">Submit: <%= @badge.title %></h1>
+    <%= link_to "Back", badge_path(@badge), class: "btn-outline" %>
+  </div>
+
+  <div class="card">
+    <%= form_with model: [@badge, @submission], class: "space-y-6" do |f| %>
+      <% if @submission.errors.any? %>
+        <div class="p-4 rounded-xl bg-red-50 text-red-800 border border-red-200">
+          <h3 class="font-semibold mb-2">Please fix the following errors:</h3>
+          <ul class="list-disc list-inside text-sm">
+            <% @submission.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div>
+        <%= f.label :kid_notes, "Tell us about it", class: "form-label" %>
+        <%= f.text_area :kid_notes, rows: 4, class: "form-textarea",
+            placeholder: "What did you do to earn this badge? Any notes for your parents..." %>
+        <p class="text-sm text-gray-500 mt-1">Optional: Share details about how you completed this badge.</p>
+      </div>
+
+      <div>
+        <%= f.label :attachments, "Upload Photos or Files", class: "form-label" %>
+        <%= f.file_field :attachments, multiple: true, class: "block w-full text-sm text-gray-500
+          file:mr-4 file:py-2 file:px-4
+          file:rounded-xl file:border-0
+          file:text-sm file:font-semibold
+          file:bg-purple-50 file:text-purple-700
+          hover:file:bg-purple-100" %>
+        <p class="text-sm text-gray-500 mt-1">Optional: Upload photos or files as proof (max 10 files).</p>
+      </div>
+
+      <div class="flex gap-3 pt-4 border-t">
+        <%= f.submit "Submit for Review", class: "btn-primary" %>
+        <%= link_to "Cancel", badge_path(@badge), class: "btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
