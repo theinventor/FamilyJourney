@@ -1,0 +1,17 @@
+challenge_one:
+  badge: multi_challenge_badge
+  title: Read a chapter
+  description: Read one chapter of any book
+  position: 1
+
+challenge_two:
+  badge: multi_challenge_badge
+  title: Write a summary
+  description: Write a summary of what you read
+  position: 2
+
+challenge_three:
+  badge: multi_challenge_badge
+  title: Discuss with parent
+  description: Discuss the chapter with a parent
+  position: 3

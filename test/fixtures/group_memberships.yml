@@ -1,0 +1,7 @@
+bob_in_kids:
+  user: kid_bob
+  group: kids_group
+
+charlie_in_kids:
+  user: kid_charlie
+  group: kids_group

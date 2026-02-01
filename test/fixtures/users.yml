@@ -1,0 +1,20 @@
+parent_alice:
+  name: Alice Smith
+  email: alice@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password123') %>
+  role: parent
+  family: smith_family
+
+kid_bob:
+  name: Bob Smith
+  email: bob@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password123') %>
+  role: kid
+  family: smith_family
+
+kid_charlie:
+  name: Charlie Smith
+  email: charlie@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password123') %>
+  role: kid
+  family: smith_family

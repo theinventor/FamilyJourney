@@ -1,0 +1,26 @@
+approved_submission:
+  badge: simple_badge
+  user: kid_charlie
+  status: approved
+  submitted_at: <%= 2.days.ago %>
+  reviewed_at: <%= 1.day.ago %>
+  reviewed_by: parent_alice
+  kid_notes: "I cleaned my room!"
+  parent_feedback: "Great job!"
+
+pending_submission:
+  badge: multi_challenge_badge
+  user: kid_bob
+  status: pending_review
+  submitted_at: <%= 1.hour.ago %>
+  kid_notes: "I finished all the challenges!"
+
+denied_submission:
+  badge: simple_badge
+  user: kid_bob
+  status: denied
+  submitted_at: <%= 3.days.ago %>
+  reviewed_at: <%= 2.days.ago %>
+  reviewed_by: parent_alice
+  kid_notes: "Done!"
+  parent_feedback: "Please make your bed too"

@@ -1,0 +1,17 @@
+pending_redemption:
+  prize: movie_night
+  user: kid_charlie
+  status: pending
+  points_spent: 15
+  requested_at: <%= 1.hour.ago %>
+  kid_note: "Can we watch it this weekend?"
+
+approved_redemption:
+  prize: ice_cream
+  user: kid_charlie
+  status: approved
+  points_spent: 20
+  requested_at: <%= 3.days.ago %>
+  reviewed_at: <%= 2.days.ago %>
+  reviewed_by: parent_alice
+  parent_feedback: "Sure, let's go Saturday!"

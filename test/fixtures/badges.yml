@@ -1,0 +1,38 @@
+simple_badge:
+  title: Clean Room
+  description: Clean your room thoroughly
+  instructions: Make your bed, vacuum, and organize your desk
+  points: 10
+  status: published
+  published_at: <%= 1.day.ago %>
+  family: smith_family
+  badge_category: chores_category
+  created_by: parent_alice
+
+multi_challenge_badge:
+  title: Reading Champion
+  description: Complete all reading challenges
+  instructions: Read books and complete the challenges
+  points: 50
+  status: published
+  published_at: <%= 1.day.ago %>
+  family: smith_family
+  badge_category: learning_category
+  created_by: parent_alice
+
+draft_badge:
+  title: Draft Badge
+  description: This badge is not published
+  points: 5
+  status: draft
+  family: smith_family
+  created_by: parent_alice
+
+unassigned_badge:
+  title: Unassigned Badge
+  description: Not assigned to any group
+  points: 15
+  status: published
+  published_at: <%= 1.day.ago %>
+  family: smith_family
+  created_by: parent_alice

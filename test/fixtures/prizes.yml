@@ -1,0 +1,27 @@
+ice_cream:
+  name: Ice Cream Trip
+  description: Go out for ice cream
+  point_cost: 20
+  active: true
+  family: smith_family
+
+movie_night:
+  name: Movie Night
+  description: Pick a movie to watch
+  point_cost: 15
+  active: true
+  family: smith_family
+
+expensive_prize:
+  name: Theme Park Visit
+  description: Visit a theme park
+  point_cost: 100
+  active: true
+  family: smith_family
+
+inactive_prize:
+  name: Old Prize
+  description: Not available anymore
+  point_cost: 5
+  active: false
+  family: smith_family

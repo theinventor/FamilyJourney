@@ -1,0 +1,13 @@
+simple_badge_to_kids:
+  badge: simple_badge
+  group: kids_group
+  active: true
+  assigned_at: <%= 1.day.ago %>
+  assigned_by: parent_alice
+
+multi_badge_to_kids:
+  badge: multi_challenge_badge
+  group: kids_group
+  active: true
+  assigned_at: <%= 1.day.ago %>
+  assigned_by: parent_alice

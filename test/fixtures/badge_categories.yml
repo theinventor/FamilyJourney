@@ -1,0 +1,9 @@
+chores_category:
+  name: Chores
+  family: smith_family
+  position: 1
+
+learning_category:
+  name: Learning
+  family: smith_family
+  position: 2

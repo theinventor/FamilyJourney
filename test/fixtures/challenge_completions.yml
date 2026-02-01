@@ -1,0 +1,11 @@
+bob_challenge_one:
+  badge_challenge: challenge_one
+  user: kid_bob
+  completed_at: <%= 2.days.ago %>
+  kid_notes: "Read chapter 1"
+
+bob_challenge_two:
+  badge_challenge: challenge_two
+  user: kid_bob
+  completed_at: <%= 1.day.ago %>
+  kid_notes: "Wrote summary"

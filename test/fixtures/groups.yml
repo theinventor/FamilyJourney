@@ -1,0 +1,9 @@
+kids_group:
+  name: All Kids
+  description: Group for all kids
+  family: smith_family
+
+teens_group:
+  name: Teens
+  description: Group for teenagers
+  family: smith_family
