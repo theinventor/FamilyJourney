@@ -1,5 +1,5 @@
 class InvitesController < ApplicationController
-  before_action :load_invite, only: [:show, :accept]
+  before_action :load_invite, only: [ :show, :accept ]
 
   def show
     if @invite.expired?
