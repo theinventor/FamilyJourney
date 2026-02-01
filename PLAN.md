@@ -103,6 +103,84 @@ Use these gradient classes for cards, badges, and stat blocks:
 
 ---
 
+## Development Workflow (How Claudito Works on This)
+
+### Running Claude Code
+Use the local Claude Code CLI (runs on Max plan, free):
+```bash
+# Start a task
+cd ~/FamilyJourney && claude "Your task here"
+
+# Continue last session
+cd ~/FamilyJourney && claude -c
+
+# Resume specific session
+cd ~/FamilyJourney && claude -r
+```
+
+Run in background with `exec` + `pty:true` + `background:true`, then poll with `process action:log`.
+
+### Rails Server
+Have Claude Code start the server bound to all interfaces so I can browse it:
+```bash
+rails server -b 0.0.0.0 -p 3000
+```
+
+Then I (Claudito) can use my browser tool to visit `http://localhost:3000` and verify the UI.
+
+### Test Users
+Create seed data with known credentials:
+```ruby
+# db/seeds.rb
+family = Family.create!(name: "Anderson Family")
+
+# Parent account
+User.create!(
+  email: "parent@test.com",
+  password: "password123",
+  name: "Test Parent",
+  role: "parent",
+  family: family
+)
+
+# Kid accounts
+User.create!(
+  email: "kid1@test.com",
+  password: "password123",
+  name: "Test Kid 1",
+  role: "kid",
+  family: family
+)
+
+User.create!(
+  email: "kid2@test.com",
+  password: "password123",
+  name: "Test Kid 2",
+  role: "kid",
+  family: family
+)
+```
+
+Run `rails db:seed` after migrations.
+
+### Verification Flow
+After each phase:
+1. Have Claude Code run the server
+2. Open browser to localhost:3000
+3. Log in as parent → verify admin features
+4. Log in as kid → verify kid dashboard
+5. Check for visual match with family-fun-tracker template
+
+### Session Continuity
+This section exists so I (Claudito) remember how to pick up work between sessions:
+- Project lives at `~/FamilyJourney`
+- Design reference at `~/family-fun-tracker`
+- Use `claude -c` to continue Claude Code sessions
+- Check `git log` for recent progress
+- Check this PLAN.md for next phase
+
+---
+
 ## Tech Stack
 
 - **Framework:** Rails 8
