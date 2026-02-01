@@ -2,7 +2,104 @@
 
 A family-scoped badge-earning web app where parents define badges (optionally with challenges), assign them to groups of kids, and review submissions. Kids track progress, submit proof, and earn badges + points that can be redeemed for prizes.
 
-**Design Reference:** `~/family-fun-tracker` - use similar visual style (colorful gradients, cards, progress rings, sidebar navigation)
+---
+
+## Design Reference
+
+**Template repo:** `~/family-fun-tracker` (React/Tailwind, but copy the styling patterns to Rails views)
+
+### Color Palette & Gradients
+
+Use these gradient classes for cards, badges, and stat blocks:
+
+```css
+/* Warm coral-pink (primary actions, stats) */
+.gradient-coral { background: linear-gradient(135deg, hsl(15 90% 60%), hsl(350 85% 65%)); }
+
+/* Teal-cyan (secondary, chores category) */
+.gradient-teal { background: linear-gradient(135deg, hsl(175 60% 50%), hsl(195 70% 55%)); }
+
+/* Purple-violet (accent, homework category) */
+.gradient-purple { background: linear-gradient(135deg, hsl(270 70% 60%), hsl(290 65% 55%)); }
+
+/* Yellow-orange (warnings, streaks, points) */
+.gradient-yellow { background: linear-gradient(135deg, hsl(45 95% 55%), hsl(35 90% 60%)); }
+
+/* Green (success, completed) */
+.gradient-green { background: linear-gradient(135deg, hsl(145 65% 45%), hsl(160 60% 50%)); }
+
+/* Pink-rose (skills category) */
+.gradient-pink { background: linear-gradient(135deg, hsl(330 80% 65%), hsl(350 75% 60%)); }
+```
+
+### Typography
+- **Font:** Nunito (Google Fonts) - friendly, rounded
+- **Weights:** 400, 600, 700, 800
+- **Big numbers:** `text-3xl font-extrabold`
+- **Labels:** `text-sm font-medium`
+
+### Card Patterns
+
+**Stat Card (points, badges earned, etc.):**
+```html
+<div class="p-5 rounded-2xl gradient-coral text-white shadow-lg hover:-translate-y-1 transition">
+  <div class="flex items-start justify-between">
+    <div>
+      <p class="text-sm opacity-90">Total Points</p>
+      <p class="text-3xl font-extrabold mt-1">450</p>
+      <p class="text-xs mt-1 opacity-80">Keep going!</p>
+    </div>
+    <div class="p-3 rounded-xl bg-white/20">
+      <!-- icon -->
+    </div>
+  </div>
+</div>
+```
+
+**Badge Card (earned vs locked):**
+```html
+<!-- Earned badge -->
+<div class="relative p-4 rounded-2xl gradient-purple text-white hover:scale-105 hover:rotate-2 transition">
+  <div class="flex flex-col items-center text-center">
+    <div class="p-3 rounded-full bg-white/20 mb-2"><!-- icon --></div>
+    <h4 class="font-bold text-sm">Badge Title</h4>
+    <p class="text-xs mt-1 opacity-90">Description</p>
+  </div>
+  <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white text-xs">✓</div>
+</div>
+
+<!-- Locked badge -->
+<div class="relative p-4 rounded-2xl bg-gray-100 text-gray-400">
+  <!-- same structure but muted colors -->
+  <div class="absolute inset-0 flex items-center justify-center bg-white/30 rounded-2xl backdrop-blur-sm">
+    <span class="text-2xl">🔒</span>
+  </div>
+</div>
+```
+
+### Layout
+- **Sidebar:** Fixed left navigation with family member avatars
+- **Main content:** Scrollable, `p-6 space-y-8`
+- **Grid:** `grid-cols-1 lg:grid-cols-3 gap-6` for dashboard
+- **Border radius:** `rounded-2xl` for cards, `rounded-full` for avatars/icons
+
+### Animations
+```css
+.hover\:scale-105:hover { transform: scale(1.05); }
+.hover\:-translate-y-1:hover { transform: translateY(-0.25rem); }
+.hover\:rotate-2:hover { transform: rotate(2deg); }
+```
+
+### Shadows
+```css
+.shadow-card { box-shadow: 0 4px 20px -4px rgba(255, 107, 107, 0.15); }
+.shadow-float { box-shadow: 0 12px 40px -12px rgba(30, 30, 60, 0.2); }
+```
+
+### Background
+- Warm cream: `hsl(35 100% 98%)` for page background
+- White cards on cream background
+- Dark mode support optional (defined in template)
 
 ---
 
