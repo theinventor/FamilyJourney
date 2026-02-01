@@ -14,7 +14,8 @@ class Admin::InvitesController < Admin::BaseController
     @invite.invited_by = current_user
 
     if @invite.save
-      redirect_to admin_invites_path, notice: "Invite created successfully. Share the link to invite another parent."
+      NotificationMailer.parent_invited(@invite).deliver_later if @invite.email.present?
+      redirect_to admin_invites_path, notice: "Invite created successfully. #{@invite.email.present? ? 'Email sent!' : 'Share the link to invite another parent.'}"
     else
       render :new, status: :unprocessable_entity
     end

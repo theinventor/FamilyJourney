@@ -1,5 +1,11 @@
 # Preview all emails at http://localhost:3000/rails/mailers/notification_mailer
 class NotificationMailerPreview < ActionMailer::Preview
+  # Preview: http://localhost:3000/rails/mailers/notification_mailer/parent_invited
+  def parent_invited
+    invite = Invite.active.first || create_sample_invite
+    NotificationMailer.parent_invited(invite)
+  end
+
   # Preview: http://localhost:3000/rails/mailers/notification_mailer/badge_submitted
   def badge_submitted
     submission = BadgeSubmission.pending_review.first || create_sample_submission(:pending_review)
@@ -64,6 +70,23 @@ class NotificationMailerPreview < ActionMailer::Preview
       status: status,
       notes: "Sample submission notes",
       parent_feedback: status == :denied ? "Please try again with more detail." : nil
+    )
+  end
+
+  def create_sample_invite
+    family = Family.first || Family.create!(name: "Preview Family")
+    parent = family.users.where(role: "parent").first || family.users.create!(
+      email: "preview-parent@example.com",
+      password: "password123",
+      name: "Preview Parent",
+      role: "parent"
+    )
+    Invite.create!(
+      family: family,
+      invited_by: parent,
+      email: "newparent@example.com",
+      token: SecureRandom.urlsafe_base64(32),
+      expires_at: 7.days.from_now
     )
   end
 

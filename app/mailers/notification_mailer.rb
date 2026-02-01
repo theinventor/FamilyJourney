@@ -1,4 +1,16 @@
 class NotificationMailer < ApplicationMailer
+  def parent_invited(invite)
+    @invite = invite
+    @family = invite.family
+    @invited_by = invite.invited_by
+    @invite_url = invite_url(@invite.token, host: ENV.fetch("APP_HOST", "localhost:3000"))
+
+    mail(
+      to: @invite.email,
+      subject: "You're invited to join #{@family.name} on FamilyJourney!"
+    )
+  end
+
   def badge_submitted(submission)
     @submission = submission
     @badge = submission.badge

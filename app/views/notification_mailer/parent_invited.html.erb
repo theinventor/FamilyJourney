@@ -1,0 +1,24 @@
+<h1>You're Invited!</h1>
+
+<p>Hi there!</p>
+
+<p><strong><%= @invited_by.name %></strong> has invited you to join <strong><%= @family.name %></strong> on FamilyJourney - a fun app where kids earn badges and points for completing tasks and achievements.</p>
+
+<p>As a parent, you'll be able to:</p>
+<ul>
+  <li>Create badges and assign point values</li>
+  <li>Review and approve badge submissions</li>
+  <li>Set up prizes kids can redeem with their points</li>
+  <li>Track your kids' progress and achievements</li>
+</ul>
+
+<p>
+  <%= link_to "Accept Invitation", @invite_url, style: "display: inline-block; padding: 12px 24px; background-color: #4F46E5; color: white; text-decoration: none; border-radius: 6px; font-weight: bold;" %>
+</p>
+
+<p><small>This invitation expires in 7 days.</small></p>
+
+<p>
+  Welcome to the family!<br>
+  — The FamilyJourney Team
+</p>
