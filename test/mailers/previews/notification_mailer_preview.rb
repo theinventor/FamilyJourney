@@ -40,17 +40,17 @@ class NotificationMailerPreview < ActionMailer::Preview
 
   def create_sample_submission(status)
     family = Family.first || Family.create!(name: "Preview Family")
-    parent = family.users.parents.first || family.users.create!(
+    parent = family.users.where(role: "parent").first || family.users.create!(
       email: "preview-parent@example.com",
       password: "password123",
       name: "Preview Parent",
-      role: :parent
+      role: "parent"
     )
-    kid = family.users.kids.first || family.users.create!(
+    kid = family.users.where(role: "kid").first || family.users.create!(
       email: "preview-kid@example.com",
       password: "password123",
       name: "Preview Kid",
-      role: :kid
+      role: "kid"
     )
     badge = Badge.first || Badge.create!(
       family: family,
@@ -69,18 +69,18 @@ class NotificationMailerPreview < ActionMailer::Preview
 
   def create_sample_redemption(status)
     family = Family.first || Family.create!(name: "Preview Family")
-    kid = family.users.kids.first || family.users.create!(
+    kid = family.users.where(role: "kid").first || family.users.create!(
       email: "preview-kid@example.com",
       password: "password123",
       name: "Preview Kid",
-      role: :kid,
+      role: "kid",
       points: 100
     )
     prize = Prize.first || Prize.create!(
       family: family,
       name: "Preview Prize",
       description: "A sample prize for email previews",
-      points_required: 50
+      point_cost: 50
     )
     Redemption.create!(
       user: kid,
