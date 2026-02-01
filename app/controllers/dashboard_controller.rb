@@ -36,6 +36,8 @@ class DashboardController < ApplicationController
     @in_progress_badges = in_progress_badges
     @pending_badges = pending_badges
     @earned_badges = earned_badges
+    @denied_badges = denied_badges
+    @ready_badges = ready_badges
     @categories = current_user.family.badge_categories
 
     render :kid_dashboard
@@ -48,6 +50,8 @@ class DashboardController < ApplicationController
       .where(group_memberships: { user_id: current_user.id })
       .where.not(id: earned_badge_ids)
       .where.not(id: pending_badge_ids)
+      .where.not(id: denied_badge_ids)
+      .where.not(id: ready_badge_ids)
       .distinct
       .includes(:badge_category, :badge_challenges)
   end
@@ -81,12 +85,48 @@ class DashboardController < ApplicationController
       .includes(:badge_category)
   end
 
+  def denied_badges
+    Badge.published
+      .where(family: current_user.family)
+      .joins(groups: :group_memberships)
+      .where(group_memberships: { user_id: current_user.id })
+      .where(id: denied_badge_ids)
+      .distinct
+      .includes(:badge_category)
+  end
+
+  def ready_badges
+    Badge.published
+      .where(family: current_user.family)
+      .joins(groups: :group_memberships)
+      .where(group_memberships: { user_id: current_user.id })
+      .where.not(id: earned_badge_ids)
+      .where.not(id: pending_badge_ids)
+      .where.not(id: denied_badge_ids)
+      .joins(:badge_challenges)
+      .distinct
+      .includes(:badge_category, :badge_challenges)
+      .select { |b| b.all_challenges_completed_for?(current_user) }
+  end
+
   def earned_badge_ids
     BadgeSubmission.where(user: current_user, status: "approved").select(:badge_id)
   end
 
   def pending_badge_ids
     BadgeSubmission.where(user: current_user, status: "pending_review").select(:badge_id)
+  end
+
+  def denied_badge_ids
+    # Get badge IDs where the latest submission is denied
+    BadgeSubmission.where(user: current_user)
+      .where.not(id: BadgeSubmission.where(user: current_user, status: ["approved", "pending_review"]).select(:id))
+      .where(status: "denied")
+      .select(:badge_id)
+  end
+
+  def ready_badge_ids
+    ready_badges.map(&:id)
   end
 
   def multi_challenge_badge_ids

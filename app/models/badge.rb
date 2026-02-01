@@ -73,7 +73,7 @@ class Badge < ApplicationRecord
     return :earned if earned_by?(user)
     return :pending if pending_for?(user)
     return :denied if denied_for?(user)
-    return :ready if all_challenges_completed_for?(user)
+    return :ready if multi_challenge? && all_challenges_completed_for?(user)
     return :in_progress if in_progress_for?(user)
     :available
   end
