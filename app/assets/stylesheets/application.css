@@ -1,10 +1,72 @@
 /*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
+ * FamilyJourney Custom Styles
+ * Using Tailwind CDN - no build step required
  */
+
+:root {
+  --color-cream: hsl(35 100% 98%);
+  --color-coral-start: hsl(15 90% 60%);
+  --color-coral-end: hsl(350 85% 65%);
+  --color-teal-start: hsl(175 60% 50%);
+  --color-teal-end: hsl(195 70% 55%);
+  --color-purple-start: hsl(270 70% 60%);
+  --color-purple-end: hsl(290 65% 55%);
+  --color-yellow-start: hsl(45 95% 55%);
+  --color-yellow-end: hsl(35 90% 60%);
+  --color-green-start: hsl(145 65% 45%);
+  --color-green-end: hsl(160 60% 50%);
+  --color-pink-start: hsl(330 80% 65%);
+  --color-pink-end: hsl(350 75% 60%);
+}
+
+/* Typography */
+.font-nunito {
+  font-family: "Nunito", sans-serif;
+}
+
+/* Background colors */
+.bg-cream {
+  background-color: var(--color-cream);
+}
+
+/* Gradient backgrounds */
+.gradient-coral {
+  background: linear-gradient(135deg, var(--color-coral-start), var(--color-coral-end));
+}
+
+.gradient-teal {
+  background: linear-gradient(135deg, var(--color-teal-start), var(--color-teal-end));
+}
+
+.gradient-purple {
+  background: linear-gradient(135deg, var(--color-purple-start), var(--color-purple-end));
+}
+
+.gradient-yellow {
+  background: linear-gradient(135deg, var(--color-yellow-start), var(--color-yellow-end));
+}
+
+.gradient-green {
+  background: linear-gradient(135deg, var(--color-green-start), var(--color-green-end));
+}
+
+.gradient-pink {
+  background: linear-gradient(135deg, var(--color-pink-start), var(--color-pink-end));
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-coral-start), var(--color-purple-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Shadows */
+.shadow-card {
+  box-shadow: 0 4px 20px -4px rgba(255, 107, 107, 0.15);
+}
+
+.shadow-float {
+  box-shadow: 0 12px 40px -12px rgba(30, 30, 60, 0.2);
+}
