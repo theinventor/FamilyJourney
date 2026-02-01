@@ -22,6 +22,71 @@ Rails.application.routes.draw do
   # Redemptions for kids
   resources :redemptions, only: [ :index, :new, :create, :show ]
 
+  # API v1 - REST API for external access (e.g., AI agents)
+  namespace :api do
+    namespace :v1 do
+      # Authentication
+      post "auth/login", to: "auth#login"
+      post "auth/logout", to: "auth#logout"
+      get "auth/me", to: "auth#me"
+
+      # Badges
+      resources :badges do
+        member do
+          post :publish
+          post :unpublish
+        end
+      end
+
+      # Badge Categories
+      resources :badge_categories do
+        member do
+          post :move_up
+          post :move_down
+        end
+      end
+
+      # Badge Submissions (Reviews)
+      resources :badge_submissions, only: [ :index, :show ] do
+        member do
+          post :approve
+          post :deny
+        end
+      end
+
+      # Challenges
+      resources :challenges, only: [ :index, :show, :create, :update, :destroy ]
+
+      # Prizes
+      resources :prizes
+
+      # Redemptions
+      resources :redemptions, only: [ :index, :show ] do
+        member do
+          post :approve
+          post :deny
+        end
+      end
+
+      # Kids
+      resources :kids do
+        member do
+          post :reset_password
+        end
+      end
+
+      # Groups
+      resources :groups do
+        member do
+          post :add_member
+          post :remove_member
+        end
+      end
+
+      # Family
+      get "family", to: "family#show"
+    end
+  end
 
   # Admin namespace for parents
   namespace :admin do

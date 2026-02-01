@@ -14,6 +14,8 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :role, presence: true, inclusion: { in: %w[parent kid] }
 
+  before_create :generate_api_token, if: :parent?
+
   def parent?
     role == "parent"
   end
@@ -36,5 +38,22 @@ class User < ApplicationRecord
 
   def can_afford?(prize)
     available_points >= prize.point_cost
+  end
+
+  def regenerate_api_token!
+    update!(api_token: generate_unique_token)
+  end
+
+  private
+
+  def generate_api_token
+    self.api_token = generate_unique_token
+  end
+
+  def generate_unique_token
+    loop do
+      token = SecureRandom.hex(32)
+      break token unless User.exists?(api_token: token)
+    end
   end
 end
