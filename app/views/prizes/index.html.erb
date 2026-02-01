@@ -1,3 +1,6 @@
+<%# Subscribe to prize updates %>
+<%= turbo_stream_from current_user.family, "prizes_kid" %>
+
 <div class="page-header">
   <div>
     <h1 class="page-title">Prizes</h1>

@@ -1,3 +1,6 @@
+<%# Subscribe to group updates %>
+<%= turbo_stream_from current_user.family, "groups_admin" %>
+
 <div class="page-header">
   <h1 class="page-title">Groups</h1>
   <%= link_to "New Group", new_admin_group_path, class: "btn-primary" %>

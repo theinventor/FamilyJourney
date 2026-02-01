@@ -1,4 +1,9 @@
-<div class="space-y-8">
+<%# Subscribe to this kid's dashboard updates %>
+<%= turbo_stream_from current_user.family, "kid_dashboard_#{current_user.id}" %>
+<%# Also subscribe to all-kids updates (e.g., when new badges are published) %>
+<%= turbo_stream_from current_user.family, "kid_dashboards" %>
+
+<div id="kid-dashboard" class="space-y-8">
   <div class="flex items-center justify-between">
     <div>
       <h1 class="text-3xl font-extrabold text-gray-800">Hey, <%= current_user.name.split.first %>!</h1>

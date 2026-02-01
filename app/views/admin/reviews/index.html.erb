@@ -1,3 +1,6 @@
+<%# Subscribe to review updates %>
+<%= turbo_stream_from current_user.family, "reviews" %>
+
 <div class="page-header">
   <h1 class="page-title">Review Queue</h1>
 </div>

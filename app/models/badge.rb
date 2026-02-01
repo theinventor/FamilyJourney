@@ -1,4 +1,6 @@
 class Badge < ApplicationRecord
+  include Turbo::Broadcastable
+
   belongs_to :badge_category, optional: true
   belongs_to :family
   belongs_to :created_by, class_name: "User"
@@ -16,6 +18,11 @@ class Badge < ApplicationRecord
 
   scope :visible, -> { published }
   scope :by_category, -> { includes(:badge_category).order("badge_categories.position ASC, badges.title ASC") }
+
+  # Broadcast when badge is created/updated (parents see new badge, kids see when published)
+  after_create_commit :broadcast_badge_created
+  after_update_commit :broadcast_badge_updated
+  after_destroy_commit :broadcast_badge_destroyed
 
   def publish!
     update!(status: :published, published_at: Time.current)
@@ -81,5 +88,27 @@ class Badge < ApplicationRecord
   def denied_for?(user)
     latest = badge_submissions.where(user: user).order(created_at: :desc).first
     latest&.denied?
+  end
+
+  private
+
+  def broadcast_badge_created
+    broadcast_refresh_to family, "parent_dashboard"
+    broadcast_refresh_to family, "badges_admin"
+  end
+
+  def broadcast_badge_updated
+    broadcast_refresh_to family, "parent_dashboard"
+    broadcast_refresh_to family, "badges_admin"
+    # When published, notify all kids in the family
+    if saved_change_to_status? && published?
+      broadcast_refresh_to family, "kid_dashboards"
+    end
+  end
+
+  def broadcast_badge_destroyed
+    broadcast_refresh_to family, "parent_dashboard"
+    broadcast_refresh_to family, "badges_admin"
+    broadcast_refresh_to family, "kid_dashboards"
   end
 end

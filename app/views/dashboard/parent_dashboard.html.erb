@@ -1,4 +1,7 @@
-<div class="space-y-8">
+<%# Subscribe to parent dashboard updates %>
+<%= turbo_stream_from current_user.family, "parent_dashboard" %>
+
+<div id="parent-dashboard" class="space-y-8">
   <div class="flex items-center justify-between">
     <div>
       <h1 class="text-3xl font-extrabold text-gray-800">Welcome back!</h1>

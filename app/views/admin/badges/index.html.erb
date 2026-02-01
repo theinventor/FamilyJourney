@@ -1,3 +1,6 @@
+<%# Subscribe to badge updates %>
+<%= turbo_stream_from current_user.family, "badges_admin" %>
+
 <div class="page-header">
   <h1 class="page-title">Badges</h1>
   <%= link_to "New Badge", new_admin_badge_path, class: "btn-primary" %>

@@ -25,6 +25,9 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <%# Enable Turbo Stream page morphing for live updates %>
+    <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
+
     <%= yield :head %>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,6 +58,10 @@
   </head>
 
   <body class="bg-cream min-h-screen font-nunito">
+    <% if user_signed_in? %>
+      <%# Subscribe to family-scoped Turbo Streams for real-time updates %>
+      <%= turbo_stream_from current_user.family, "family_updates" %>
+    <% end %>
     <% if user_signed_in? %>
       <div class="flex min-h-screen">
         <!-- Mobile hamburger menu button -->

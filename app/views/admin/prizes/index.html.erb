@@ -1,3 +1,6 @@
+<%# Subscribe to prize updates %>
+<%= turbo_stream_from current_user.family, "prizes_admin" %>
+
 <div class="page-header">
   <h1 class="page-title">Prizes</h1>
   <%= link_to "New Prize", new_admin_prize_path, class: "btn-primary" %>
