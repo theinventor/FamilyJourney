@@ -1,5 +1,9 @@
 # FamilyJourney
 
+> ⚠️ **WARNING: CLAW-CODED**
+> 
+> I not only didn't write a line of code, I didn't even look at it once. Clawdbot built this using our spec and Claude Code and a lot of nudging via Telegram. No warranty!
+
 A gamified family task management app that makes chores and achievements fun for kids. Parents create badges for tasks and skills, kids complete them to earn points, and redeem points for customizable prizes.
 
 ## Features
@@ -76,10 +80,10 @@ After running `db:seed`, you can log in with these accounts:
 | Role | Email | Password |
 |------|-------|----------|
 | Parent | `parent@test.com` | `password123` |
-| Kid (Emma) | `kid1@test.com` | `password123` |
-| Kid (Jack) | `kid2@test.com` | `password123` |
+| Kid (Tommy) | `kid1@test.com` | `password123` |
+| Kid (Sally) | `kid2@test.com` | `password123` |
 
-All test accounts belong to the "Anderson Family" with sample badges, prizes, and submissions.
+All test accounts belong to the "Smith Family" with sample badges, prizes, and submissions.
 
 ## Project Structure
 
@@ -184,8 +188,8 @@ cp -r skill/familyjourney ~/.clawdbot/skills/
 ```
 
 Example commands your AI assistant can handle:
-- "How many points does Emma have?"
-- "Approve Jack's homework badge submission"
+- "How many points does Tommy have?"
+- "Approve Sally's homework badge submission"
 - "Add a new prize called Movie Night for 50 points"
 - "What badges are pending review?"
 
@@ -220,4 +224,4 @@ kamal deploy
 
 ## License
 
-This project is private and proprietary.
+MIT License - see [LICENSE](LICENSE) for details.
