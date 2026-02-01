@@ -93,11 +93,13 @@ class Badge < ApplicationRecord
   private
 
   def broadcast_badge_created
+    Rails.logger.info "[TURBO] Badge##{id} created - broadcasting to family##{family_id} badges_admin"
     broadcast_refresh_to family, "parent_dashboard"
     broadcast_refresh_to family, "badges_admin"
   end
 
   def broadcast_badge_updated
+    Rails.logger.info "[TURBO] Badge##{id} updated - broadcasting to family##{family_id} badges_admin"
     broadcast_refresh_to family, "parent_dashboard"
     broadcast_refresh_to family, "badges_admin"
     # When published, notify all kids in the family
