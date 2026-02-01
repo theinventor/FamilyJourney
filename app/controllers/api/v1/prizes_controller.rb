@@ -46,7 +46,7 @@ module Api
       private
 
       def prize_params
-        params.require(:prize).permit(:name, :description, :point_cost, :status, group_ids: [])
+        params.require(:prize).permit(:name, :description, :point_cost, :status, :image, group_ids: [])
       end
 
       def prize_json(prize, detailed: false)
@@ -59,6 +59,13 @@ module Api
           created_at: prize.created_at,
           updated_at: prize.updated_at
         }
+
+        if prize.image.attached?
+          json[:image_url] = Rails.application.routes.url_helpers.rails_blob_url(
+            prize.image,
+            host: request.base_url
+          )
+        end
 
         if detailed
           json[:groups] = prize.groups.map { |g| { id: g.id, name: g.name } }
