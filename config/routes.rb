@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   # Dashboard requires authentication
   get "dashboard", to: "dashboard#index", as: :dashboard
 
+  # API Documentation
+  get "api/docs", to: "api_docs#show", as: :api_docs
+
   # Kid profile
   get "profile", to: "profiles#show", as: :profile
 

@@ -1,0 +1,352 @@
+<div class="max-w-5xl mx-auto space-y-8">
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-extrabold text-gray-800">FamilyJourney API Documentation</h1>
+      <p class="text-gray-600 mt-1">Complete REST API reference for programmatic access</p>
+    </div>
+    <%= link_to "Back to Dashboard", dashboard_path, class: "btn-secondary" %>
+  </div>
+
+  <div class="card">
+    <div class="prose max-w-none">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Authentication</h2>
+      <p class="text-gray-600 mb-4">The API uses token-based authentication with Bearer tokens. Include your token in the Authorization header of all API requests:</p>
+
+      <div class="bg-gray-50 p-4 rounded-lg font-mono text-sm mb-4">
+        Authorization: Bearer YOUR_TOKEN_HERE
+      </div>
+
+      <p class="text-gray-600 mb-4">Your API token: <code class="bg-gray-100 px-2 py-1 rounded text-sm"><%= current_user.api_token %></code></p>
+
+      <h3 class="text-xl font-bold text-gray-800 mt-6 mb-3">Alternative Login</h3>
+      <p class="text-gray-600 mb-2">You can also authenticate via the login endpoint:</p>
+
+      <div class="bg-gray-50 p-4 rounded-lg font-mono text-sm mb-4">
+        <div class="text-blue-600 mb-2">POST /api/v1/auth/login</div>
+        <div class="text-gray-500">Content-Type: application/json</div>
+        <br>
+        <div>{</div>
+        <div class="ml-4">"email": "parent@example.com",</div>
+        <div class="ml-4">"password": "your_password"</div>
+        <div>}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Base URL</h2>
+    <p class="text-gray-600 mb-4">All API endpoints are prefixed with <code class="bg-gray-100 px-2 py-1 rounded text-sm">/api/v1</code></p>
+    <div class="bg-gray-50 p-4 rounded-lg font-mono text-sm">
+      <%= request.base_url %>/api/v1
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">API Endpoints</h2>
+
+    <div class="space-y-6">
+      <!-- Authentication -->
+      <div class="border-l-4 border-teal-500 pl-4">
+        <h3 class="text-lg font-bold text-gray-800 mb-3">Authentication</h3>
+        <div class="space-y-3">
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded mr-2">GET</span>
+            <code class="text-sm">/api/v1/auth/me</code>
+            <p class="text-sm text-gray-600 mt-1">Get current user information</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/auth/logout</code>
+            <p class="text-sm text-gray-600 mt-1">Logout (regenerates token)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Family -->
+      <div class="border-l-4 border-purple-500 pl-4">
+        <h3 class="text-lg font-bold text-gray-800 mb-3">Family</h3>
+        <div class="bg-gray-50 p-3 rounded">
+          <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded mr-2">GET</span>
+          <code class="text-sm">/api/v1/family</code>
+          <p class="text-sm text-gray-600 mt-1">Get family overview with stats</p>
+        </div>
+      </div>
+
+      <!-- Badges -->
+      <div class="border-l-4 border-pink-500 pl-4">
+        <h3 class="text-lg font-bold text-gray-800 mb-3">Badges</h3>
+        <div class="space-y-3">
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded mr-2">GET</span>
+            <code class="text-sm">/api/v1/badges</code>
+            <p class="text-sm text-gray-600 mt-1">List all badges</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded mr-2">GET</span>
+            <code class="text-sm">/api/v1/badges/:id</code>
+            <p class="text-sm text-gray-600 mt-1">Get single badge</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/badges</code>
+            <p class="text-sm text-gray-600 mt-1">Create badge</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded mr-2">PATCH</span>
+            <code class="text-sm">/api/v1/badges/:id</code>
+            <p class="text-sm text-gray-600 mt-1">Update badge</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-red-100 text-red-800 text-xs font-semibold rounded mr-2">DELETE</span>
+            <code class="text-sm">/api/v1/badges/:id</code>
+            <p class="text-sm text-gray-600 mt-1">Delete badge</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/badges/:id/publish</code>
+            <p class="text-sm text-gray-600 mt-1">Publish badge</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/badges/:id/unpublish</code>
+            <p class="text-sm text-gray-600 mt-1">Unpublish badge</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Badge Categories -->
+      <div class="border-l-4 border-indigo-500 pl-4">
+        <h3 class="text-lg font-bold text-gray-800 mb-3">Badge Categories</h3>
+        <div class="space-y-3">
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded mr-2">GET</span>
+            <code class="text-sm">/api/v1/badge_categories</code>
+            <p class="text-sm text-gray-600 mt-1">List all categories</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/badge_categories</code>
+            <p class="text-sm text-gray-600 mt-1">Create category</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded mr-2">PATCH</span>
+            <code class="text-sm">/api/v1/badge_categories/:id</code>
+            <p class="text-sm text-gray-600 mt-1">Update category</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/badge_categories/:id/move_up</code>
+            <p class="text-sm text-gray-600 mt-1">Move category up in order</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/badge_categories/:id/move_down</code>
+            <p class="text-sm text-gray-600 mt-1">Move category down in order</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Badge Submissions -->
+      <div class="border-l-4 border-orange-500 pl-4">
+        <h3 class="text-lg font-bold text-gray-800 mb-3">Badge Submissions (Reviews)</h3>
+        <div class="space-y-3">
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded mr-2">GET</span>
+            <code class="text-sm">/api/v1/badge_submissions</code>
+            <p class="text-sm text-gray-600 mt-1">List all submissions (filter by ?status=pending_review)</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/badge_submissions/:id/approve</code>
+            <p class="text-sm text-gray-600 mt-1">Approve submission</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/badge_submissions/:id/deny</code>
+            <p class="text-sm text-gray-600 mt-1">Deny submission (requires reason in body)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Challenges -->
+      <div class="border-l-4 border-cyan-500 pl-4">
+        <h3 class="text-lg font-bold text-gray-800 mb-3">Challenges</h3>
+        <div class="space-y-3">
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded mr-2">GET</span>
+            <code class="text-sm">/api/v1/challenges</code>
+            <p class="text-sm text-gray-600 mt-1">List all challenges (filter by ?badge_id=1)</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/challenges</code>
+            <p class="text-sm text-gray-600 mt-1">Create challenge</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded mr-2">PATCH</span>
+            <code class="text-sm">/api/v1/challenges/:id</code>
+            <p class="text-sm text-gray-600 mt-1">Update challenge</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prizes -->
+      <div class="border-l-4 border-yellow-500 pl-4">
+        <h3 class="text-lg font-bold text-gray-800 mb-3">Prizes</h3>
+        <div class="space-y-3">
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded mr-2">GET</span>
+            <code class="text-sm">/api/v1/prizes</code>
+            <p class="text-sm text-gray-600 mt-1">List all prizes</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/prizes</code>
+            <p class="text-sm text-gray-600 mt-1">Create prize</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded mr-2">PATCH</span>
+            <code class="text-sm">/api/v1/prizes/:id</code>
+            <p class="text-sm text-gray-600 mt-1">Update prize</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Redemptions -->
+      <div class="border-l-4 border-red-500 pl-4">
+        <h3 class="text-lg font-bold text-gray-800 mb-3">Redemptions</h3>
+        <div class="space-y-3">
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded mr-2">GET</span>
+            <code class="text-sm">/api/v1/redemptions</code>
+            <p class="text-sm text-gray-600 mt-1">List all redemptions (filter by ?status=pending)</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/redemptions/:id/approve</code>
+            <p class="text-sm text-gray-600 mt-1">Approve redemption</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/redemptions/:id/deny</code>
+            <p class="text-sm text-gray-600 mt-1">Deny redemption</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kids -->
+      <div class="border-l-4 border-blue-500 pl-4">
+        <h3 class="text-lg font-bold text-gray-800 mb-3">Kids</h3>
+        <div class="space-y-3">
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded mr-2">GET</span>
+            <code class="text-sm">/api/v1/kids</code>
+            <p class="text-sm text-gray-600 mt-1">List all kids</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/kids</code>
+            <p class="text-sm text-gray-600 mt-1">Create kid (returns auto-generated password)</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded mr-2">PATCH</span>
+            <code class="text-sm">/api/v1/kids/:id</code>
+            <p class="text-sm text-gray-600 mt-1">Update kid</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/kids/:id/reset_password</code>
+            <p class="text-sm text-gray-600 mt-1">Reset kid's password</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Groups -->
+      <div class="border-l-4 border-green-500 pl-4">
+        <h3 class="text-lg font-bold text-gray-800 mb-3">Groups</h3>
+        <div class="space-y-3">
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded mr-2">GET</span>
+            <code class="text-sm">/api/v1/groups</code>
+            <p class="text-sm text-gray-600 mt-1">List all groups</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/groups</code>
+            <p class="text-sm text-gray-600 mt-1">Create group</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/groups/:id/add_member</code>
+            <p class="text-sm text-gray-600 mt-1">Add member to group</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded">
+            <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
+            <code class="text-sm">/api/v1/groups/:id/remove_member</code>
+            <p class="text-sm text-gray-600 mt-1">Remove member from group</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Example Workflows</h2>
+
+    <div class="space-y-6">
+      <div>
+        <h3 class="text-lg font-bold text-gray-800 mb-2">1. Check for Pending Reviews</h3>
+        <div class="bg-gray-50 p-4 rounded-lg font-mono text-sm space-y-2">
+          <div><span class="text-gray-500"># Get family overview</span></div>
+          <div>curl -H "Authorization: Bearer TOKEN" \</div>
+          <div class="ml-4"><%= request.base_url %>/api/v1/family</div>
+          <br>
+          <div><span class="text-gray-500"># Get pending submissions</span></div>
+          <div>curl -H "Authorization: Bearer TOKEN" \</div>
+          <div class="ml-4"><%= request.base_url %>/api/v1/badge_submissions?status=pending_review</div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-bold text-gray-800 mb-2">2. Create a New Badge</h3>
+        <div class="bg-gray-50 p-4 rounded-lg font-mono text-sm space-y-2">
+          <div>curl -X POST -H "Authorization: Bearer TOKEN" \</div>
+          <div class="ml-4">-H "Content-Type: application/json" \</div>
+          <div class="ml-4">-d '{</div>
+          <div class="ml-8">"badge": {</div>
+          <div class="ml-12">"title": "Math Master",</div>
+          <div class="ml-12">"description": "Complete 10 math worksheets",</div>
+          <div class="ml-12">"points": 75,</div>
+          <div class="ml-12">"badge_category_id": 1,</div>
+          <div class="ml-12">"group_ids": [1]</div>
+          <div class="ml-8">}</div>
+          <div class="ml-4">}' \</div>
+          <div class="ml-4"><%= request.base_url %>/api/v1/badges</div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-bold text-gray-800 mb-2">3. Approve a Badge Submission</h3>
+        <div class="bg-gray-50 p-4 rounded-lg font-mono text-sm space-y-2">
+          <div>curl -X POST -H "Authorization: Bearer TOKEN" \</div>
+          <div class="ml-4"><%= request.base_url %>/api/v1/badge_submissions/3/approve</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-red-50 border-red-200">
+    <h2 class="text-2xl font-bold text-red-800 mb-4">Security Notes</h2>
+    <ul class="space-y-2 text-red-900">
+      <li>• API tokens provide full parent access to your family</li>
+      <li>• Only parent accounts can use the API</li>
+      <li>• All operations are scoped to your family</li>
+      <li>• Tokens can be regenerated via the logout endpoint</li>
+      <li>• Never share your API token publicly</li>
+    </ul>
+  </div>
+
+  <div class="text-center pb-8">
+    <%= link_to "Back to Dashboard", dashboard_path, class: "btn-primary" %>
+  </div>
+</div>
