@@ -5,7 +5,7 @@
   </div>
 
   <div class="card">
-    <%= form_with model: [@badge, @submission], class: "space-y-6" do |f| %>
+    <%= form_with model: @submission, url: badge_submissions_path(@badge), class: "space-y-6" do |f| %>
       <% if @submission.errors.any? %>
         <div class="p-4 rounded-xl bg-red-50 text-red-800 border border-red-200">
           <h3 class="font-semibold mb-2">Please fix the following errors:</h3>

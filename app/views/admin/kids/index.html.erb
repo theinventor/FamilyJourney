@@ -1,0 +1,55 @@
+<div class="page-header">
+  <h1 class="page-title">Kids</h1>
+  <%= link_to "Add Kid", new_admin_kid_path, class: "btn-primary" %>
+</div>
+
+<% if @kids.any? %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @kids.each do |kid| %>
+      <div class="card card-hover">
+        <div class="flex items-start justify-between mb-4">
+          <div class="flex items-center gap-3">
+            <div class="avatar gradient-purple text-white">
+              <%= kid.name.first.upcase %>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-gray-800"><%= kid.name %></h3>
+              <p class="text-sm text-gray-500"><%= kid.email %></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 mb-4">
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+            </svg>
+            <span class="text-sm font-medium"><%= kid.available_points %> points</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-purple-500" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
+            </svg>
+            <span class="text-sm font-medium"><%= kid.badge_submissions.approved.count %> badges</span>
+          </div>
+        </div>
+
+        <div class="flex gap-2">
+          <%= link_to "View", admin_kid_path(kid), class: "btn-secondary btn-sm flex-1" %>
+          <%= link_to "Edit", edit_admin_kid_path(kid), class: "btn-outline btn-sm flex-1" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="card">
+    <div class="empty-state">
+      <svg class="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+      </svg>
+      <h3 class="empty-state-title">No kids yet</h3>
+      <p class="empty-state-text mb-4">Add your kids so they can start earning badges and prizes!</p>
+      <%= link_to "Add Your First Kid", new_admin_kid_path, class: "btn-primary" %>
+    </div>
+  </div>
+<% end %>

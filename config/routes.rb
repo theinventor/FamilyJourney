@@ -25,6 +25,12 @@ Rails.application.routes.draw do
 
   # Admin namespace for parents
   namespace :admin do
+    resources :kids do
+      member do
+        post :reset_password
+      end
+    end
+
     resources :groups do
       member do
         post :add_member

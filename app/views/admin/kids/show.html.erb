@@ -1,0 +1,94 @@
+<div class="page-header">
+  <h1 class="page-title"><%= @kid.name %></h1>
+  <div class="flex gap-2">
+    <%= link_to "Edit", edit_admin_kid_path(@kid), class: "btn-outline" %>
+    <%= link_to "Back", admin_kids_path, class: "btn-outline" %>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- Profile Card -->
+  <div class="card">
+    <div class="flex items-center gap-4 mb-6">
+      <div class="avatar avatar-lg gradient-purple text-white text-2xl">
+        <%= @kid.name.first.upcase %>
+      </div>
+      <div>
+        <h2 class="text-xl font-bold text-gray-800"><%= @kid.name %></h2>
+        <p class="text-gray-500"><%= @kid.email %></p>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <div class="flex justify-between items-center py-3 border-b border-gray-100">
+        <span class="text-gray-600">Total Points</span>
+        <span class="font-bold text-lg text-yellow-600"><%= @kid.available_points %></span>
+      </div>
+      <div class="flex justify-between items-center py-3 border-b border-gray-100">
+        <span class="text-gray-600">Badges Earned</span>
+        <span class="font-bold text-lg text-purple-600"><%= @kid.badge_submissions.approved.count %></span>
+      </div>
+      <div class="flex justify-between items-center py-3 border-b border-gray-100">
+        <span class="text-gray-600">Prizes Redeemed</span>
+        <span class="font-bold text-lg text-teal-600"><%= @kid.redemptions.approved.count %></span>
+      </div>
+    </div>
+
+    <div class="mt-6 pt-6 border-t border-gray-100">
+      <%= button_to "Reset Password", reset_password_admin_kid_path(@kid), 
+          method: :post, 
+          class: "btn-outline btn-sm w-full",
+          data: { confirm: "This will generate a new temporary password. Continue?" } %>
+    </div>
+  </div>
+
+  <!-- Groups -->
+  <div class="card">
+    <h3 class="text-lg font-bold text-gray-800 mb-4">Groups</h3>
+    <% groups = @kid.groups %>
+    <% if groups.any? %>
+      <div class="space-y-2">
+        <% groups.each do |group| %>
+          <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+            <span class="font-medium"><%= group.name %></span>
+            <%= link_to "View", admin_group_path(group), class: "text-purple-600 hover:text-purple-800 text-sm" %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500 text-sm">Not in any groups yet.</p>
+    <% end %>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="card">
+    <h3 class="text-lg font-bold text-gray-800 mb-4">Recent Badges</h3>
+    <% recent_badges = @kid.badge_submissions.includes(:badge).order(updated_at: :desc).limit(5) %>
+    <% if recent_badges.any? %>
+      <div class="space-y-3">
+        <% recent_badges.each do |submission| %>
+          <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+            <div class="p-2 rounded-lg <%= submission.approved? ? 'bg-green-100' : 'bg-gray-200' %>">
+              <svg class="w-5 h-5 <%= submission.approved? ? 'text-green-600' : 'text-gray-500' %>" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-medium text-gray-800 truncate"><%= submission.badge.name %></p>
+              <p class="text-xs text-gray-500"><%= submission.status.humanize %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500 text-sm">No badge activity yet.</p>
+    <% end %>
+  </div>
+</div>
+
+<div class="mt-6">
+  <%= button_to "Remove #{@kid.name} from Family", admin_kid_path(@kid), 
+      method: :delete, 
+      class: "text-red-600 hover:text-red-800 text-sm",
+      data: { confirm: "Are you sure you want to remove #{@kid.name}? This cannot be undone." } %>
+</div>

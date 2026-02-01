@@ -1,0 +1,25 @@
+<div class="page-header">
+  <h1 class="page-title">Edit <%= @kid.name %></h1>
+  <%= link_to "Back", admin_kid_path(@kid), class: "btn-outline" %>
+</div>
+
+<div class="card max-w-lg">
+  <%= form_with model: @kid, url: admin_kid_path(@kid), method: :patch, local: true, class: "space-y-6" do |f| %>
+    <%= render "shared/error_messages", resource: @kid %>
+
+    <div>
+      <%= f.label :name, class: "form-label" %>
+      <%= f.text_field :name, class: "form-input", autofocus: true %>
+    </div>
+
+    <div>
+      <%= f.label :email, class: "form-label" %>
+      <%= f.email_field :email, class: "form-input" %>
+    </div>
+
+    <div class="flex gap-3">
+      <%= f.submit "Save Changes", class: "btn-primary" %>
+      <%= link_to "Cancel", admin_kid_path(@kid), class: "btn-outline" %>
+    </div>
+  <% end %>
+</div>
