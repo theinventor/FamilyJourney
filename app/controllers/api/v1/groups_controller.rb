@@ -83,7 +83,6 @@ module Api
             { id: u.id, name: u.name, email: u.email, role: u.role }
           end
           json[:badges_count] = group.badges.count
-          json[:prizes_count] = group.prizes.count
         end
 
         json
