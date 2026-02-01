@@ -80,7 +80,8 @@
 
 /* Card components */
 .card {
-  @apply bg-white rounded-2xl shadow-card p-6;
+  @apply bg-white rounded-2xl p-6;
+  box-shadow: 0 4px 20px -4px rgba(255, 107, 107, 0.15);
 }
 
 .card-hover {
@@ -128,23 +129,28 @@
 }
 
 .btn-primary {
-  @apply btn gradient-coral text-white hover:opacity-90 hover:-translate-y-0.5;
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all text-white;
+  background: linear-gradient(135deg, var(--color-coral-start), var(--color-coral-end));
+}
+.btn-primary:hover {
+  @apply opacity-90 -translate-y-0.5;
 }
 
 .btn-secondary {
-  @apply btn bg-gray-100 text-gray-700 hover:bg-gray-200;
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all bg-gray-100 text-gray-700 hover:bg-gray-200;
 }
 
 .btn-success {
-  @apply btn gradient-green text-white hover:opacity-90;
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all text-white hover:opacity-90;
+  background: linear-gradient(135deg, var(--color-green-start), var(--color-green-end));
 }
 
 .btn-danger {
-  @apply btn bg-red-500 text-white hover:bg-red-600;
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all bg-red-500 text-white hover:bg-red-600;
 }
 
 .btn-outline {
-  @apply btn border-2 border-gray-300 text-gray-700 hover:border-gray-400;
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all border-2 border-gray-300 text-gray-700 hover:border-gray-400;
 }
 
 .btn-sm {
@@ -157,27 +163,27 @@
 }
 
 .status-available {
-  @apply status-pill bg-blue-100 text-blue-800;
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800;
 }
 
 .status-in-progress {
-  @apply status-pill bg-yellow-100 text-yellow-800;
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800;
 }
 
 .status-ready {
-  @apply status-pill bg-green-100 text-green-800;
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800;
 }
 
 .status-pending {
-  @apply status-pill bg-orange-100 text-orange-800;
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-800;
 }
 
 .status-earned {
-  @apply status-pill bg-purple-100 text-purple-800;
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-800;
 }
 
 .status-denied {
-  @apply status-pill bg-red-100 text-red-800;
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800;
 }
 
 /* Page header */
@@ -191,7 +197,8 @@
 
 /* Table styles */
 .table-container {
-  @apply bg-white rounded-2xl shadow-card overflow-hidden;
+  @apply bg-white rounded-2xl overflow-hidden;
+  box-shadow: 0 4px 20px -4px rgba(255, 107, 107, 0.15);
 }
 
 .table {
