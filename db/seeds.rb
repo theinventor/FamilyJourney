@@ -34,7 +34,7 @@ puts "  Created parent: #{parent.email}"
 kid1 = User.find_or_initialize_by(email: "kid1@test.com")
 kid1.update!(
   password: seed_password,
-  name: "Emma",
+  name: "Bart",
   role: "kid",
   family: family
 )
@@ -160,14 +160,14 @@ puts "  Created #{family.badges.count} badges"
 
 puts "Creating some earned badges..."
 
-# Emma earns a badge
+# Bart earns a badge
 submission1 = BadgeSubmission.find_or_create_by!(badge: badge1, user: kid1) do |s|
   s.kid_notes = "I made my bed every day this week! It's becoming a habit now."
   s.status = :approved
   s.submitted_at = 3.days.ago
   s.reviewed_at = 2.days.ago
   s.reviewed_by = parent
-  s.parent_feedback = "Great job Emma! Your bed looked perfect every day."
+  s.parent_feedback = "Great job Bart! Your bed looked perfect every day."
 end
 
 # Jack earns a badge
@@ -179,7 +179,7 @@ submission2 = BadgeSubmission.find_or_create_by!(badge: badge2, user: kid2) do |
   s.reviewed_by = parent
 end
 
-# Emma has a pending submission
+# Bart has a pending submission
 BadgeSubmission.find_or_create_by!(badge: badge3, user: kid1) do |s|
   s.kid_notes = "All my homework is done for the past two weeks!"
   s.status = :pending_review
@@ -188,7 +188,7 @@ end
 
 puts "  Created badge submissions"
 
-# Emma completes some reading challenges
+# Bart completes some reading challenges
 reading_badge.badge_challenges.limit(3).each do |challenge|
   ChallengeCompletion.find_or_create_by!(badge_challenge: challenge, user: kid1) do |c|
     c.kid_notes = "I read this book and loved it!"
@@ -257,5 +257,5 @@ puts "  Prizes: #{family.prizes.count}"
 puts ""
 puts "Test accounts:"
 puts "  Parent: parent@test.com / #{seed_password}"
-puts "  Kid 1 (Emma): kid1@test.com / #{seed_password}"
+puts "  Kid 1 (Bart): kid1@test.com / #{seed_password}"
 puts "  Kid 2 (Jack): kid2@test.com / #{seed_password}"

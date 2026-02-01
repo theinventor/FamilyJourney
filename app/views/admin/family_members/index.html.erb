@@ -1,6 +1,13 @@
 <div class="page-header">
   <h1 class="page-title">Family Parents</h1>
-  <%= link_to "Invite Parent", new_admin_invite_path, class: "btn-primary" %>
+  <div class="flex gap-3">
+    <% if @pending_invites_count && @pending_invites_count > 0 %>
+      <%= link_to admin_invites_path, class: "btn-secondary" do %>
+        Pending Invites (<%= @pending_invites_count %>)
+      <% end %>
+    <% end %>
+    <%= link_to "Invite Parent", new_admin_invite_path, class: "btn-primary" %>
+  </div>
 </div>
 
 <div class="card">

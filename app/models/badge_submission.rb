@@ -3,6 +3,7 @@ class BadgeSubmission < ApplicationRecord
   belongs_to :user
   belongs_to :reviewed_by, class_name: "User", optional: true
 
+  has_rich_text :evidence
   has_many_attached :attachments
 
   enum :status, {

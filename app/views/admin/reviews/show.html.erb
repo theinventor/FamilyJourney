@@ -37,7 +37,14 @@
         </div>
       <% end %>
 
-      <% if @submission.kid_notes.present? %>
+      <% if @submission.evidence.present? %>
+        <div class="mb-6">
+          <p class="text-sm text-gray-500 mb-2">Evidence & Notes</p>
+          <div class="text-gray-800 bg-purple-50 rounded-xl p-4 trix-content">
+            <%= @submission.evidence %>
+          </div>
+        </div>
+      <% elsif @submission.kid_notes.present? %>
         <div class="mb-6">
           <p class="text-sm text-gray-500 mb-1">Kid's Notes</p>
           <p class="text-gray-800 bg-purple-50 rounded-xl p-4"><%= @submission.kid_notes %></p>

@@ -62,6 +62,6 @@ class SubmissionsController < ApplicationController
   end
 
   def submission_params
-    params.require(:badge_submission).permit(:kid_notes, attachments: [])
+    params.require(:badge_submission).permit(:kid_notes, :evidence, attachments: [])
   end
 end
