@@ -7,7 +7,7 @@ class ParentSignupTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     # Fill out and submit the form
-    assert_difference ["User.count", "Family.count"], 1 do
+    assert_difference [ "User.count", "Family.count" ], 1 do
       post user_registration_path, params: {
         user: {
           name: "John Smith",
@@ -37,7 +37,7 @@ class ParentSignupTest < ActionDispatch::IntegrationTest
     get new_user_registration_path
     assert_response :success
 
-    assert_no_difference ["User.count", "Family.count"] do
+    assert_no_difference [ "User.count", "Family.count" ] do
       post user_registration_path, params: {
         user: {
           name: "Jane Doe",
@@ -56,7 +56,7 @@ class ParentSignupTest < ActionDispatch::IntegrationTest
     get new_user_registration_path
     assert_response :success
 
-    assert_no_difference ["User.count", "Family.count"] do
+    assert_no_difference [ "User.count", "Family.count" ] do
       post user_registration_path, params: {
         user: {
           name: "",
@@ -72,7 +72,7 @@ class ParentSignupTest < ActionDispatch::IntegrationTest
   end
 
   test "honeypot prevents bot signups" do
-    assert_no_difference ["User.count", "Family.count"] do
+    assert_no_difference [ "User.count", "Family.count" ] do
       post user_registration_path, params: {
         user: {
           name: "Bot User",
