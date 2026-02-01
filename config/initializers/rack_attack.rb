@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Rack::Attack
+  # Use Rails cache store for throttling
+  Rack::Attack.cache.store = ActiveSupport::Cache::MemoryStore.new
   # Throttle sign up attempts by IP address
   throttle("registrations/ip", limit: 5, period: 1.hour) do |req|
     req.ip if req.path == "/users" && req.post?
