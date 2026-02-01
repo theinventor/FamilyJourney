@@ -154,4 +154,70 @@
       <% end %>
     </div>
   </div>
+
+  <div class="card">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-bold text-gray-800">API Access</h2>
+      <div class="p-2 rounded-lg gradient-teal w-fit">
+        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+        </svg>
+      </div>
+    </div>
+
+    <p class="text-gray-600 text-sm mb-4">Use this token to access the Family Journey API. Keep it secure and don't share it publicly.</p>
+
+    <div class="space-y-3">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Your API Token</label>
+        <div class="flex items-center gap-2">
+          <input type="text"
+                 id="api-token"
+                 value="<%= current_user.api_token %>"
+                 readonly
+                 class="flex-1 px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg font-mono text-sm"
+          >
+          <button onclick="copyApiToken()"
+                  class="btn-primary whitespace-nowrap"
+                  id="copy-btn">
+            Copy
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-2 p-3 bg-blue-50 rounded-lg">
+        <svg class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <div class="text-sm text-blue-800">
+          <p class="font-semibold mb-1">Getting Started</p>
+          <p>Include this token in the Authorization header: <code class="bg-white px-2 py-0.5 rounded">Authorization: Bearer YOUR_TOKEN</code></p>
+          <p class="mt-2">See the <%= link_to "API documentation", "#", class: "underline font-medium" %> for available endpoints.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script>
+function copyApiToken() {
+  const tokenInput = document.getElementById('api-token');
+  const copyBtn = document.getElementById('copy-btn');
+
+  tokenInput.select();
+  tokenInput.setSelectionRange(0, 99999); // For mobile devices
+
+  navigator.clipboard.writeText(tokenInput.value).then(() => {
+    const originalText = copyBtn.textContent;
+    copyBtn.textContent = 'Copied!';
+    copyBtn.classList.add('bg-green-600');
+
+    setTimeout(() => {
+      copyBtn.textContent = originalText;
+      copyBtn.classList.remove('bg-green-600');
+    }, 2000);
+  }).catch(err => {
+    alert('Failed to copy token');
+  });
+}
+</script>
