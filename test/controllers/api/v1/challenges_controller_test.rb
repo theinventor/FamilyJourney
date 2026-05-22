@@ -29,6 +29,8 @@ class Api::V1::ChallengesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Practice scales", body["title"]
     assert_equal "Log 20 minutes", body["description"]
     assert_equal badge.id, body["badge_id"]
+    assert_equal 2, body["position"]
+    assert_equal 2, BadgeChallenge.find(body["id"]).position
   end
 
   test "update accepts title" do
