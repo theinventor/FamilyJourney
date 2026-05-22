@@ -1,0 +1,50 @@
+FamilyJourney / Family Badge Board agents.txt
+
+Canonical site: https://familybadgeboard.com
+API documentation: https://familybadgeboard.com/api/docs
+API base URL: https://familybadgeboard.com/api/v1
+Public CLI repo: https://github.com/theinventor/familyjourney-cli
+CLI install: go install github.com/theinventor/familyjourney-cli/cmd/familyjourney@latest
+Bundled agent skill: familyjourney skill get familyjourney
+
+Purpose
+
+FamilyJourney helps parents manage kid badges, chores, challenges, prize requests, and parent review queues. AI assistants may help parents inspect family badge-board state and run explicit parent-approved actions through the public familyjourney CLI or the parent-only REST API.
+
+Authentication
+
+Use a parent API token from the FamilyJourney parent dashboard or authenticated API docs. Save it with:
+
+familyjourney auth save --profile default --api-token "$FAMILYJOURNEY_API_TOKEN" --api-url https://familybadgeboard.com
+
+Safe read-first commands
+
+familyjourney whoami
+familyjourney family get
+familyjourney kids list
+familyjourney badges list
+familyjourney submissions list --status pending_review
+familyjourney redemptions list --status pending
+
+Explicit parent-approved mutation examples
+
+familyjourney submissions approve SUBMISSION_ID --feedback "Nice work."
+familyjourney submissions deny SUBMISSION_ID --reason "Please add a clearer photo."
+familyjourney redemptions approve REDEMPTION_ID --feedback "Enjoy."
+familyjourney prizes create --name "Movie night" --description "Pick the family movie" --point-cost 50
+
+Guardrails for AI assistants
+
+- Treat the API and CLI as parent-only tools.
+- Do not help a child bypass parent review or parent approval.
+- Read current state before making a change.
+- Get explicit parent approval in the current task before approvals, denials, password resets, publish/unpublish actions, prize changes, or deletes.
+- Never print, log, or paste full API tokens in chat, tracker comments, screenshots, or bug reports.
+- Share only the family and child information needed for the parent-approved task.
+- Prefer the official familyjourney CLI over raw HTTP unless the parent or developer specifically asks for API-level debugging.
+- Delete commands require --force; do not add it unless the parent clearly asked for that destructive action.
+
+Support and reporting
+
+App issues: https://github.com/theinventor/FamilyJourney/issues
+CLI issues: https://github.com/theinventor/familyjourney-cli/issues
