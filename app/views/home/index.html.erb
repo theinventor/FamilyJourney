@@ -1,32 +1,32 @@
 <div class="min-h-screen bg-cream">
-  <div class="max-w-6xl mx-auto px-6 py-12">
-    <nav class="flex items-center justify-between mb-16">
-      <h1 class="text-2xl font-extrabold">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 overflow-hidden">
+    <nav class="flex items-center justify-between gap-3 mb-12 sm:mb-16">
+      <h1 class="text-xl sm:text-2xl font-extrabold">
         <span class="gradient-text">Family</span>Journey
       </h1>
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 sm:gap-4 shrink-0">
         <%= link_to "Sign In", new_user_session_path, class: "text-gray-600 hover:text-gray-800 font-medium" %>
         <%= link_to "Sign Up", new_user_registration_path, class: "btn-primary btn-sm" %>
       </div>
     </nav>
 
-    <div class="grid lg:grid-cols-2 gap-16 items-center">
-      <div>
-        <h2 class="text-5xl font-extrabold text-gray-800 leading-tight mb-6">
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <div class="min-w-0">
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-800 leading-tight mb-6">
           Make family tasks
           <span class="gradient-text">fun & rewarding</span>
         </h2>
         <p class="text-xl text-gray-600 mb-8">
           Create badges for your kids to earn, track their progress, and let them redeem points for prizes. Turn chores into adventures!
         </p>
-        <div class="flex items-center gap-4">
-          <%= link_to "Get Started Free", new_user_registration_path, class: "btn-primary text-lg px-8 py-4" %>
-          <%= link_to "Learn More", "#features", class: "btn-outline text-lg px-8 py-4" %>
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+          <%= link_to "Get Started Free", new_user_registration_path, class: "btn-primary text-lg px-8 py-4 w-full sm:w-auto" %>
+          <%= link_to "Learn More", "#features", class: "btn-outline text-lg px-8 py-4 w-full sm:w-auto" %>
         </div>
       </div>
 
-      <div class="relative">
-        <div class="grid grid-cols-2 gap-4">
+      <div class="relative min-w-0">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div class="stat-card gradient-coral">
             <div class="flex items-start justify-between">
               <div>
@@ -57,7 +57,7 @@
             </div>
           </div>
 
-          <div class="badge-card gradient-green col-span-2">
+          <div class="badge-card gradient-green sm:col-span-2">
             <div class="flex items-center gap-4">
               <div class="p-3 rounded-full bg-white/20">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,9 +79,9 @@
       </div>
     </div>
 
-    <section id="ai-assistants" class="mt-24 overflow-hidden rounded-[2rem] bg-white shadow-float border border-pink-100">
-      <div class="grid lg:grid-cols-[1.05fr_0.95fr]">
-        <div class="p-8 md:p-12 bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50">
+    <section id="ai-assistants" class="mt-20 sm:mt-24 overflow-hidden rounded-[1.5rem] sm:rounded-[2rem] bg-white shadow-float border border-pink-100">
+      <div class="grid min-w-0 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+        <div class="min-w-0 p-5 sm:p-8 md:p-12 bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50">
           <p class="text-sm font-extrabold uppercase tracking-wider text-pink-600 mb-3">AI assistant native</p>
           <h3 class="text-3xl md:text-4xl font-extrabold text-gray-800 leading-tight mb-5">
             Let an assistant help manage the badge board, with parents in charge.
@@ -90,7 +90,7 @@
             FamilyJourney gives parents an official API and CLI so an assistant can inspect family progress, find pending reviews, and run clear parent-approved actions without bypassing the review flow.
           </p>
 
-          <div class="grid sm:grid-cols-3 gap-3 mb-8">
+          <div class="grid sm:grid-cols-3 gap-3 mb-8 min-w-0">
             <div class="rounded-2xl bg-white/80 border border-white p-4">
               <p class="text-2xl font-extrabold text-pink-600">Read</p>
               <p class="text-sm text-gray-600 mt-1">Check kids, badges, points, prizes, and pending review queues.</p>
@@ -112,8 +112,8 @@
           </div>
         </div>
 
-        <div class="p-8 md:p-10 bg-gray-900 text-white">
-          <div class="flex items-center justify-between gap-4 mb-6">
+        <div class="min-w-0 p-5 sm:p-8 md:p-10 bg-gray-900 text-white">
+          <div class="flex items-center justify-between gap-4 mb-6 min-w-0">
             <div>
               <p class="text-sm font-bold uppercase tracking-wider text-yellow-300">Assistant quick-start</p>
               <h4 class="text-2xl font-extrabold mt-1">Four safe steps</h4>
@@ -126,14 +126,14 @@
           </div>
 
           <ol class="space-y-5">
-            <li class="flex gap-4">
+            <li class="flex gap-3 sm:gap-4 min-w-0">
               <span class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-white text-gray-900 font-extrabold">1</span>
-              <div>
+              <div class="min-w-0">
                 <p class="font-bold">Get a parent API token</p>
                 <p class="text-sm text-gray-300">Parents can copy their token from the dashboard and review authenticated details in <%= link_to "/api/docs", api_docs_path, class: "text-yellow-300 underline" %>.</p>
               </div>
             </li>
-            <li class="flex gap-4">
+            <li class="flex gap-3 sm:gap-4 min-w-0">
               <span class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-white text-gray-900 font-extrabold">2</span>
               <div class="min-w-0">
                 <p class="font-bold">Install and save a profile</p>
@@ -141,7 +141,7 @@
 familyjourney auth save --profile default --api-token "$FAMILYJOURNEY_API_TOKEN" --api-url https://familybadgeboard.com</code></pre>
               </div>
             </li>
-            <li class="flex gap-4">
+            <li class="flex gap-3 sm:gap-4 min-w-0">
               <span class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-white text-gray-900 font-extrabold">3</span>
               <div class="min-w-0">
                 <p class="font-bold">Read before changing anything</p>
@@ -150,7 +150,7 @@ familyjourney family get
 familyjourney submissions list --status pending_review</code></pre>
               </div>
             </li>
-            <li class="flex gap-4">
+            <li class="flex gap-3 sm:gap-4 min-w-0">
               <span class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-white text-gray-900 font-extrabold">4</span>
               <div class="min-w-0">
                 <p class="font-bold">Run explicit parent-approved actions</p>
