@@ -41,6 +41,45 @@
     </div>
   </div>
 
+  <div class="card bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50 border border-pink-100">
+    <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+      <div class="max-w-2xl">
+        <p class="text-sm font-extrabold uppercase tracking-wider text-pink-600 mb-2">Official CLI for AI assistants</p>
+        <h2 class="text-2xl font-bold text-gray-800 mb-3">Use the public familyjourney CLI before reaching for raw HTTP</h2>
+        <p class="text-gray-700 mb-4">
+          Parents can let an assistant inspect badge-board state and perform explicit parent-approved actions through the CLI. It stores tokens safely, emits JSON for agents, and uses the same parent-only API documented here.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <%= link_to "CLI repo", "https://github.com/theinventor/familyjourney-cli", class: "btn-primary btn-sm", target: "_blank", rel: "noopener" %>
+          <%= link_to "/agents.txt", agents_txt_path, class: "btn-secondary btn-sm" %>
+        </div>
+      </div>
+
+      <div class="w-full lg:max-w-xl rounded-2xl bg-gray-900 text-green-200 p-4 font-mono text-xs overflow-x-auto">
+        <div>go install github.com/theinventor/familyjourney-cli/cmd/familyjourney@latest</div>
+        <div>familyjourney auth save --profile default --api-token "$FAMILYJOURNEY_API_TOKEN" --api-url <%= request.base_url %></div>
+        <div>familyjourney family get</div>
+        <div>familyjourney submissions approve SUBMISSION_ID --feedback "Nice work."</div>
+        <div>familyjourney skill get familyjourney</div>
+      </div>
+    </div>
+
+    <div class="mt-6 grid md:grid-cols-3 gap-4">
+      <div class="rounded-2xl bg-white/80 p-4">
+        <h3 class="font-bold text-gray-800 mb-1">Read first</h3>
+        <p class="text-sm text-gray-600">Start with <code>familyjourney whoami</code>, <code>familyjourney family get</code>, and pending review lists.</p>
+      </div>
+      <div class="rounded-2xl bg-white/80 p-4">
+        <h3 class="font-bold text-gray-800 mb-1">Ask before writes</h3>
+        <p class="text-sm text-gray-600">Approvals, denials, deletes, password resets, publish actions, and prize changes need a current parent command.</p>
+      </div>
+      <div class="rounded-2xl bg-white/80 p-4">
+        <h3 class="font-bold text-gray-800 mb-1">Keep tokens private</h3>
+        <p class="text-sm text-gray-600">Never paste full API tokens into chat, tracker comments, screenshots, or bug reports.</p>
+      </div>
+    </div>
+  </div>
+
   <div class="card">
     <h2 class="text-2xl font-bold text-gray-800 mb-4">API Endpoints</h2>
 
@@ -180,12 +219,12 @@
           <div class="bg-gray-50 p-3 rounded">
             <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded mr-2">POST</span>
             <code class="text-sm">/api/v1/challenges</code>
-            <p class="text-sm text-gray-600 mt-1">Create challenge</p>
+            <p class="text-sm text-gray-600 mt-1">Create challenge (requires badge_id and challenge.title)</p>
           </div>
           <div class="bg-gray-50 p-3 rounded">
             <span class="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded mr-2">PATCH</span>
             <code class="text-sm">/api/v1/challenges/:id</code>
-            <p class="text-sm text-gray-600 mt-1">Update challenge</p>
+            <p class="text-sm text-gray-600 mt-1">Update challenge title, description, or position</p>
           </div>
         </div>
       </div>

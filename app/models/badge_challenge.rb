@@ -15,6 +15,8 @@ class BadgeChallenge < ApplicationRecord
   private
 
   def set_position
+    return if position.present?
+
     max_position = badge.badge_challenges.unscoped.maximum(:position) || 0
     self.position = max_position + 1
   end

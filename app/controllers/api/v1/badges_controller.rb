@@ -70,7 +70,7 @@ module Api
           :status,
           :badge_category_id,
           group_ids: [],
-          badge_challenges_attributes: [ :id, :description, :position, :_destroy ]
+          badge_challenges_attributes: [ :id, :title, :description, :position, :_destroy ]
         )
       end
 
@@ -92,7 +92,7 @@ module Api
         if detailed
           json[:groups] = badge.groups.map { |g| { id: g.id, name: g.name } }
           json[:challenges] = badge.badge_challenges.map do |c|
-            { id: c.id, description: c.description, position: c.position }
+            { id: c.id, title: c.title, description: c.description, position: c.position }
           end
         end
 

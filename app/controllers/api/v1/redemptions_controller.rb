@@ -31,8 +31,11 @@ module Api
           .where(users: { family_id: current_user.family_id })
           .find(params[:id])
 
-        redemption.approve!(current_user)
-        render json: redemption_json(redemption, detailed: true)
+        if redemption.approve!(current_user, feedback: params[:feedback])
+          render json: redemption_json(redemption, detailed: true)
+        else
+          render_unprocessable([ "#{redemption.user.name} no longer has enough points for this prize" ])
+        end
       rescue ActiveRecord::RecordNotFound
         render_not_found("Redemption not found")
       end
@@ -43,7 +46,8 @@ module Api
           .where(users: { family_id: current_user.family_id })
           .find(params[:id])
 
-        redemption.deny!(current_user)
+        feedback = params[:feedback].presence || params[:reason].presence || "Redemption request denied"
+        redemption.deny!(current_user, feedback: feedback)
         render json: redemption_json(redemption, detailed: true)
       rescue ActiveRecord::RecordNotFound
         render_not_found("Redemption not found")
@@ -60,6 +64,7 @@ module Api
           user_name: redemption.user.name,
           points_spent: redemption.points_spent,
           status: redemption.status,
+          requested_at: redemption.requested_at,
           redeemed_at: redemption.created_at,
           reviewed_at: redemption.reviewed_at,
           reviewed_by_id: redemption.reviewed_by_id,
@@ -68,6 +73,7 @@ module Api
         }
 
         if detailed
+          json[:parent_feedback] = redemption.parent_feedback
           json[:prize] = {
             id: redemption.prize.id,
             name: redemption.prize.name,
