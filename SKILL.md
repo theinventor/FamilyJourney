@@ -1,6 +1,46 @@
 # FamilyJourney API Documentation
 
-This document describes how to use the FamilyJourney REST API to programmatically manage all parent-side functionality. The API is designed to be used by AI agents or other automated systems.
+This document describes how to use the FamilyJourney REST API to programmatically manage parent-side functionality. AI assistants should normally use the official public `familyjourney` CLI first, then fall back to raw HTTP only for API-level debugging.
+
+## Official CLI for AI Assistants
+
+Install the public CLI and save a parent API token:
+
+```bash
+go install github.com/theinventor/familyjourney-cli/cmd/familyjourney@latest
+familyjourney auth save --profile default --api-token "$FAMILYJOURNEY_API_TOKEN" --api-url https://familybadgeboard.com
+familyjourney whoami
+```
+
+Safe read-first commands:
+
+```bash
+familyjourney family get
+familyjourney kids list
+familyjourney badges list
+familyjourney submissions list --status pending_review
+familyjourney redemptions list --status pending
+```
+
+Explicit parent-approved mutation examples:
+
+```bash
+familyjourney submissions approve SUBMISSION_ID --feedback "Nice work."
+familyjourney submissions deny SUBMISSION_ID --reason "Please add a clearer photo."
+familyjourney prizes create --name "Movie night" --description "Pick the family movie" --point-cost 50
+```
+
+Bundled agent skill:
+
+```bash
+familyjourney skill get familyjourney
+```
+
+References:
+
+- Agents file: https://familybadgeboard.com/agents.txt
+- CLI repo: https://github.com/theinventor/familyjourney-cli
+- API docs: https://familybadgeboard.com/api/docs
 
 ## Authentication
 
@@ -9,12 +49,8 @@ The API uses token-based authentication with Bearer tokens.
 ### Getting Your API Token
 
 1. Your API token is automatically generated when you create a parent account
-2. To retrieve your token, log into the Rails console or web interface as a parent
-3. For testing, you can use the temporary script:
-
-```bash
-rails runner tmp/generate_api_token.rb
-```
+2. To retrieve your token, sign in as a parent and open the dashboard API Access card or `/api/docs`
+3. Save it with the public CLI using `familyjourney auth save`
 
 ### Using Your Token
 
@@ -560,12 +596,13 @@ Or for validation errors:
 
 ## Tips for AI Agents
 
-1. **Always check family stats first** to understand the current state
-2. **Filter submissions by status** to focus on pending items
-3. **Use detailed endpoints** (GET /api/v1/badges/:id) when you need full information including groups and challenges
-4. **Batch operations** - fetch all resources at once, then process them
-5. **Handle errors gracefully** - check response status codes
-6. **Store the API token securely** - it provides full parent access
+1. **Use the official CLI first** for normal assistant workflows
+2. **Always check family stats first** to understand the current state
+3. **Filter submissions by status** to focus on pending items
+4. **Use detailed endpoints** (GET /api/v1/badges/:id) when you need full information including groups and challenges
+5. **Get explicit parent approval** before approvals, denials, deletes, password resets, publish/unpublish actions, or prize changes
+6. **Handle errors gracefully** - check response status codes
+7. **Store the API token securely** - it provides full parent access
 
 ## Security Notes
 
