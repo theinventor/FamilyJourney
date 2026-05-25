@@ -58,13 +58,14 @@ module Api
       private
 
       def challenge_params
-        params.require(:challenge).permit(:description, :position)
+        params.require(:challenge).permit(:title, :description, :position)
       end
 
       def challenge_json(challenge, detailed: false)
         json = {
           id: challenge.id,
           badge_id: challenge.badge_id,
+          title: challenge.title,
           description: challenge.description,
           position: challenge.position,
           created_at: challenge.created_at,

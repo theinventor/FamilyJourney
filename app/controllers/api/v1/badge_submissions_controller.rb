@@ -31,7 +31,7 @@ module Api
           .where(users: { family_id: current_user.family_id })
           .find(params[:id])
 
-        submission.approve!(current_user)
+        submission.approve!(current_user, feedback: params[:feedback])
         render json: submission_json(submission, detailed: true)
       rescue ActiveRecord::RecordNotFound
         render_not_found("Submission not found")
@@ -43,8 +43,8 @@ module Api
           .where(users: { family_id: current_user.family_id })
           .find(params[:id])
 
-        denial_reason = params[:reason] || "Submission does not meet requirements"
-        submission.deny!(current_user, denial_reason)
+        feedback = params[:feedback].presence || params[:reason].presence || "Submission does not meet requirements"
+        submission.deny!(current_user, feedback: feedback)
         render json: submission_json(submission, detailed: true)
       rescue ActiveRecord::RecordNotFound
         render_not_found("Submission not found")
@@ -60,7 +60,7 @@ module Api
           user_id: submission.user_id,
           user_name: submission.user.name,
           status: submission.status,
-          submitted_at: submission.created_at,
+          submitted_at: submission.submitted_at,
           reviewed_at: submission.reviewed_at,
           reviewed_by_id: submission.reviewed_by_id,
           created_at: submission.created_at,
@@ -68,8 +68,10 @@ module Api
         }
 
         if detailed
-          json[:notes] = submission.notes
-          json[:denial_reason] = submission.denial_reason
+          json[:kid_notes] = submission.kid_notes
+          json[:parent_feedback] = submission.parent_feedback
+          json[:notes] = submission.kid_notes
+          json[:denial_reason] = submission.denied? ? submission.parent_feedback : nil
           json[:badge] = {
             id: submission.badge.id,
             title: submission.badge.title,
