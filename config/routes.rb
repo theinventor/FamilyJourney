@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   # API Documentation
   get "api/docs", to: "api_docs#show", as: :api_docs
 
+  # Public agent discovery
+  get "agents.txt", to: "agents#show", defaults: { format: :text }, as: :agents_txt
+
   # Kid profile
   get "profile", to: "profiles#show", as: :profile
 

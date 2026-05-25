@@ -79,6 +79,95 @@
       </div>
     </div>
 
+    <section id="ai-assistants" class="mt-24 overflow-hidden rounded-[2rem] bg-white shadow-float border border-pink-100">
+      <div class="grid lg:grid-cols-[1.05fr_0.95fr]">
+        <div class="p-8 md:p-12 bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50">
+          <p class="text-sm font-extrabold uppercase tracking-wider text-pink-600 mb-3">AI assistant native</p>
+          <h3 class="text-3xl md:text-4xl font-extrabold text-gray-800 leading-tight mb-5">
+            Let an assistant help manage the badge board, with parents in charge.
+          </h3>
+          <p class="text-lg text-gray-700 mb-6">
+            FamilyJourney gives parents an official API and CLI so an assistant can inspect family progress, find pending reviews, and run clear parent-approved actions without bypassing the review flow.
+          </p>
+
+          <div class="grid sm:grid-cols-3 gap-3 mb-8">
+            <div class="rounded-2xl bg-white/80 border border-white p-4">
+              <p class="text-2xl font-extrabold text-pink-600">Read</p>
+              <p class="text-sm text-gray-600 mt-1">Check kids, badges, points, prizes, and pending review queues.</p>
+            </div>
+            <div class="rounded-2xl bg-white/80 border border-white p-4">
+              <p class="text-2xl font-extrabold text-teal-600">Review</p>
+              <p class="text-sm text-gray-600 mt-1">Summarize submissions so parents can decide quickly.</p>
+            </div>
+            <div class="rounded-2xl bg-white/80 border border-white p-4">
+              <p class="text-2xl font-extrabold text-purple-600">Act</p>
+              <p class="text-sm text-gray-600 mt-1">Approve, deny, publish, or edit only after an explicit parent command.</p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <%= link_to "Open API docs", api_docs_path, class: "btn-primary" %>
+            <%= link_to "View CLI repo", "https://github.com/theinventor/familyjourney-cli", class: "btn-outline", target: "_blank", rel: "noopener" %>
+            <%= link_to "/agents.txt", agents_txt_path, class: "btn-secondary" %>
+          </div>
+        </div>
+
+        <div class="p-8 md:p-10 bg-gray-900 text-white">
+          <div class="flex items-center justify-between gap-4 mb-6">
+            <div>
+              <p class="text-sm font-bold uppercase tracking-wider text-yellow-300">Assistant quick-start</p>
+              <h4 class="text-2xl font-extrabold mt-1">Four safe steps</h4>
+            </div>
+            <div class="hidden sm:flex w-14 h-14 rounded-2xl gradient-yellow items-center justify-center">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+          </div>
+
+          <ol class="space-y-5">
+            <li class="flex gap-4">
+              <span class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-white text-gray-900 font-extrabold">1</span>
+              <div>
+                <p class="font-bold">Get a parent API token</p>
+                <p class="text-sm text-gray-300">Parents can copy their token from the dashboard and review authenticated details in <%= link_to "/api/docs", api_docs_path, class: "text-yellow-300 underline" %>.</p>
+              </div>
+            </li>
+            <li class="flex gap-4">
+              <span class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-white text-gray-900 font-extrabold">2</span>
+              <div class="min-w-0">
+                <p class="font-bold">Install and save a profile</p>
+                <pre class="mt-2 overflow-x-auto rounded-xl bg-black/40 p-3 text-xs text-green-200"><code>go install github.com/theinventor/familyjourney-cli/cmd/familyjourney@latest
+familyjourney auth save --profile default --api-token "$FAMILYJOURNEY_API_TOKEN" --api-url https://familybadgeboard.com</code></pre>
+              </div>
+            </li>
+            <li class="flex gap-4">
+              <span class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-white text-gray-900 font-extrabold">3</span>
+              <div class="min-w-0">
+                <p class="font-bold">Read before changing anything</p>
+                <pre class="mt-2 overflow-x-auto rounded-xl bg-black/40 p-3 text-xs text-green-200"><code>familyjourney whoami
+familyjourney family get
+familyjourney submissions list --status pending_review</code></pre>
+              </div>
+            </li>
+            <li class="flex gap-4">
+              <span class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-white text-gray-900 font-extrabold">4</span>
+              <div class="min-w-0">
+                <p class="font-bold">Run explicit parent-approved actions</p>
+                <pre class="mt-2 overflow-x-auto rounded-xl bg-black/40 p-3 text-xs text-green-200"><code>familyjourney submissions approve SUBMISSION_ID --feedback "Nice work."
+familyjourney prizes create --name "Movie night" --description "Pick the family movie" --point-cost 50</code></pre>
+              </div>
+            </li>
+          </ol>
+
+          <div class="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-gray-200">
+            <p class="font-bold text-white mb-1">Bundled skill for assistants</p>
+            <code class="text-yellow-200">familyjourney skill get familyjourney</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <div id="features" class="mt-24">
       <h3 class="text-3xl font-extrabold text-gray-800 text-center mb-12">
         How it works
