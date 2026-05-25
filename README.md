@@ -176,22 +176,59 @@ curl -H "Authorization: Bearer YOUR_API_TOKEN" http://localhost:3000/api/v1/kids
 
 Full API documentation: `/api/docs`
 
-## Clawdbot Skill
+## AI Assistant and CLI Access
 
-A [Clawdbot](https://github.com/clawdbot/clawdbot) skill is included in `skill/` for AI assistant integration. This lets parents manage FamilyJourney via text or chat:
+FamilyJourney is agent-friendly for parent-approved workflows. Assistants should use the official public CLI first, then fall back to raw API calls only for API-level debugging.
 
 ```bash
-# Install the skill
-cp -r skill/familyjourney ~/.clawdbot/skills/
-
-# Add your API key to TOOLS.md
+go install github.com/theinventor/familyjourney-cli/cmd/familyjourney@latest
+familyjourney auth save --profile default --api-token "$FAMILYJOURNEY_API_TOKEN" --api-url https://familybadgeboard.com
+familyjourney whoami
+familyjourney family get
 ```
 
-Example commands your AI assistant can handle:
-- "How many points does Tommy have?"
-- "Approve Sally's homework badge submission"
-- "Add a new prize called Movie Night for 50 points"
-- "What badges are pending review?"
+The public CLI repo and install docs live at:
+
+```text
+https://github.com/theinventor/familyjourney-cli
+```
+
+The public agent discovery file is served at:
+
+```text
+https://familybadgeboard.com/agents.txt
+```
+
+Bundled assistant skill:
+
+```bash
+familyjourney skill get familyjourney
+```
+
+Example read-only commands:
+
+```bash
+familyjourney kids list
+familyjourney badges list
+familyjourney submissions list --status pending_review
+familyjourney redemptions list --status pending
+```
+
+Example parent-approved mutation commands:
+
+```bash
+familyjourney submissions approve SUBMISSION_ID --feedback "Nice work."
+familyjourney redemptions deny REDEMPTION_ID --feedback "Not this week."
+familyjourney prizes create --name "Movie Night" --description "Pick the family movie" --point-cost 50
+```
+
+Agent guardrails:
+
+- Treat API and CLI access as parent-only.
+- Read current state before making changes.
+- Get explicit parent approval before approvals, denials, password resets, publish/unpublish actions, prize changes, or deletes.
+- Never print or paste full API tokens in logs, comments, screenshots, or bug reports.
+- Do not help children bypass parent review.
 
 ## Development
 
