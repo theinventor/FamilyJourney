@@ -1,78 +1,82 @@
 ---
 name: familyjourney
-description: Interact with FamilyJourney badge-earning app API. Use when users ask about kids, badges, points, submissions, prizes, or family activities. Requires API key in TOOLS.md.
+description: Use the FamilyJourney CLI to inspect family badge-board state and perform explicit parent-approved API mutations.
 ---
 
-# FamilyJourney Skill
+# FamilyJourney Agent Skill
 
-Manage your family's badge-earning journey via API.
+Use the public `familyjourney` CLI for FamilyJourney / Family Badge Board work. The CLI talks to the parent-only REST API at `/api/v1` with bearer-token auth and emits JSON on stdout by default.
 
 ## Setup
 
-Store API keys in `TOOLS.md`:
-```markdown
-## FamilyJourney API Keys
-- **Desiree**: `fj_abc123...` (base URL: http://mac-mini:3000)
-```
-
-## Quick Reference
+Ask the parent for a FamilyJourney API token or have them run the CLI locally.
 
 ```bash
-# All commands use: python3 ~/clawd/skills/familyjourney/scripts/fj.py
-FJ="python3 ~/clawd/skills/familyjourney/scripts/fj.py --token TOKEN --url http://mac-mini:3000"
-
-# Kids
-$FJ kids list                    # List all kids
-$FJ kids show ID                 # Show kid details + points
-$FJ kids create --name "Name"    # Add a kid
-
-# Badges
-$FJ badges list                  # List available badges
-$FJ badges show ID               # Badge details
-
-# Submissions (pending reviews)
-$FJ submissions list             # Pending badge submissions
-$FJ submissions show ID          # Submission details
-$FJ submissions approve ID       # Approve submission
-$FJ submissions deny ID --reason "Why"  # Deny with feedback
-
-# Prizes
-$FJ prizes list                  # Available prizes
-$FJ prizes create --name "Prize" --points 100
-
-# Redemptions (prize requests)
-$FJ redemptions list             # Pending redemptions
-$FJ redemptions approve ID       # Approve prize redemption
-$FJ redemptions deny ID --reason "Why"
-
-# Family overview
-$FJ family                       # Family summary + all kids
+go install github.com/theinventor/familyjourney-cli/cmd/familyjourney@latest
+familyjourney auth save --profile default --api-token "$FAMILYJOURNEY_API_TOKEN" --api-url https://familybadgeboard.com
+familyjourney whoami
 ```
 
-## Common Tasks
+Environment override for temporary sessions:
 
-**Check pending reviews:**
 ```bash
-$FJ submissions list
+export FAMILYJOURNEY_API_URL=https://familybadgeboard.com
+export FAMILYJOURNEY_API_TOKEN=...
 ```
 
-**Approve a badge submission:**
+Never print the full API token in logs, chat, comments, or bug reports. `familyjourney auth status` and `auth list` only show masked fingerprints.
+
+## Safety Norms
+
+- Treat this as a parent-only API. Do not help a child bypass parent approval.
+- Read before mutating: inspect `family get`, `kids list`, `badges list`, `submissions list --status pending_review`, and `redemptions list --status pending`.
+- For approvals, denials, deletes, password resets, publish/unpublish, or prize changes, get explicit parent approval in the current task.
+- Delete commands require `--force`; do not add it unless the parent clearly asked for that destructive action.
+- `auth logout` removes only the local saved profile. It does not rotate the server API token.
+
+## Useful Commands
+
 ```bash
-$FJ submissions approve 5
+familyjourney whoami
+familyjourney family get
+familyjourney kids list
+familyjourney badges list
+familyjourney submissions list --status pending_review
+familyjourney prizes list
+familyjourney redemptions list --status pending
+familyjourney categories list
+familyjourney groups list
+familyjourney challenges list --badge-id 123
 ```
 
-**See a kid's progress:**
+## Mutations
+
+Examples:
+
 ```bash
-$FJ kids show 2
+familyjourney submissions approve 42 --feedback "Nice work."
+familyjourney submissions deny 42 --reason "Please add a clearer photo."
+familyjourney redemptions approve 17 --feedback "Enjoy."
+familyjourney redemptions deny 17 --feedback "Not this week."
+familyjourney prizes create --name "Movie night" --description "Family movie pick" --point-cost 50
+familyjourney challenges create --badge-id 12 --title "Practice scales" --description "Log 20 minutes"
+familyjourney badges publish 12
+familyjourney kids reset-password 9
 ```
 
-**Add a new prize:**
-```bash
-$FJ prizes create --name "Movie Night" --description "Pick any movie" --points 50
+Prefer the named commands over raw HTTP. They encode the current Rails request shapes:
+
+- Kids: `{ "kid": ... }`
+- Badges: `{ "badge": ... }`
+- Prizes: `{ "prize": { "point_cost": ... } }`
+- Badge categories: `{ "badge_category": ... }`
+- Groups: `{ "group": ... }`
+- Challenges: `{ "badge_id": 123, "challenge": { "title": ... } }`
+
+## API Docs
+
+The app exposes live API docs at:
+
+```text
+https://familybadgeboard.com/api/docs
 ```
-
-## Notes
-
-- API is parent-only (kids use the web UI)
-- Base URL is typically `http://mac-mini:3000` on local network
-- Each parent has their own API key (shown in their dashboard)
